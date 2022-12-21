@@ -1,0 +1,129 @@
+<div class="buyer-page">
+  	<div class="buyer-intro-top">
+        <div class="buyer-heading">
+          <h2 class="section-title type-heading-1">{{ section.settings.buyer_top_title }}</h2>
+          <div class="buyer-heading-copy">{{ section.settings.buyer_text }}</div>
+        </div>
+      	<div class="buyer-slider">
+           {% if section.settings.banner_img1 != blank %}
+          	<div class="bs-item"><img src="{{ section.settings.banner_img1 | img_url:'400x' }}"/></div>
+          {% endif%}
+          {% if section.settings.banner_img2 != blank %}
+            <div class="bs-item"><img src="{{ section.settings.banner_img2 | img_url:'400x' }}"/></div>
+          {% endif%}
+          {% if section.settings.banner_img3 != blank %}
+            <div class="bs-item"><img src="{{ section.settings.banner_img3 | img_url:'400x' }}"/></div>
+          {% endif%}
+          {% if section.settings.banner_img4 != blank %}
+            <div class="bs-item"><img src="{{ section.settings.banner_img4 | img_url:'400x' }}"/></div>
+          {% endif%}
+          {% if section.settings.banner_img5 != blank %}
+            <div class="bs-item"><img src="{{ section.settings.banner_img5 | img_url:'400x' }}"/></div>
+          {% endif%}
+      	</div>
+  	</div>
+    <div class="buyer-list-block">
+        {% for block in section.blocks %}
+  		<div id="buyer-full-block-{{ forloop.index }}" class="buyer-full-block">
+          <div class="buyer-wrapper">
+            <div class="buyer-image">
+              <div class="bi-img">
+                    <div class="buyer-name">
+                        {{ block.settings.buyer_Name }}
+                    </div>
+                    <img src="{{ block.settings.buyer_img | img_url:'500x'}}"/>
+                    <div class="bttn_wrapper"><a href="{{ block.settings.buyer_link }}" class="bttn">{{ block.settings.buyer_link_text }}</a></div>
+              </div>
+            </div>
+            <div class="buyer-info">
+                <h3>{{ block.settings.buyer_title }}</h3>
+                <p>{{ block.settings.buyer_text }}</p>
+                
+            </div>
+          </div>
+        </div>    
+       {% endfor %} 
+  	</div>
+</div>
+{% schema %}
+  {
+    "name": "Buyer content",
+    "settings": [
+		{
+          "type":"text",
+          "id":"buyer_top_title",
+          "label":"Buyer top title"
+		},
+        {
+          "type":"richtext",
+          "id":"buyer_text",
+          "label":"Banner text"
+		},
+		{
+          "type":"image_picker",
+          "id":"banner_img1",
+          "label":"Buyer top image 1"
+		},
+		{
+          "type":"image_picker",
+          "id":"banner_img2",
+          "label":"Buyer top image 2"
+		},
+		{
+          "type":"image_picker",
+          "id":"banner_img3",
+          "label":"Buyer top image 3"
+		},
+		{
+          "type":"image_picker",
+          "id":"banner_img4",
+          "label":"Buyer top image 4"
+		},
+		{
+          "type":"image_picker",
+          "id":"banner_img5",
+          "label":"Buyer top image 5"
+		}
+		
+	],
+    
+	"blocks":[
+	  {
+		"name":"Buyer list",
+		"type":"text",
+		"settings": [
+			{
+              "type":"image_picker",
+              "id":"buyer_img",
+              "label":"Category image"
+            },
+			{
+              "type":"text",
+              "id":"buyer_Name",
+              "label":"Buyer Name"
+            },
+			{
+              "type":"text",
+              "id":"buyer_title",
+              "label":"Buyer Title"
+            },
+            {
+              "type":"richtext",
+              "id":"buyer_text",
+              "label":"Buyer text"
+            },
+			{
+              "type":"text",
+              "id":"buyer_link_text",
+              "label":"Buyer link text"
+            },
+			{
+              "type":"url",
+              "id":"buyer_link",
+              "label":"Buyer url"
+            }
+         ]
+	  }
+	]
+  }
+{% endschema %}

@@ -1,0 +1,75 @@
+<div class="rarities-section_wrapper">
+    <div class="section rarities-section">
+        <div class="rarities_top_copy">
+            <h1 class="rarities_title">{{ section.settings.title1 }}</h1>
+            <p class="rarities_subtitle">{{ section.settings.subtitle1 }}</p>
+        </div>
+        <div class="rarities_imgs">
+            <div class="rarities_lgimg_wrapper">
+                <img class="rarities_lgimg" src="{{ section.settings.rarities_large_image | img_url: '500x' }}">
+            </div>
+            <div class="rarities_smimg_wrapper">
+                <img class="rarities_smimg" src="{{ section.settings.rarities_small_image | img_url: '400x'  }}">
+            </div>
+            <p class="rarities_subtitle">{{ section.settings.subtitle2 }}</p>
+        </div>
+        <div class="rarities_link_form">
+            <h1 class="rarities_title">{{ section.settings.title2 }}</h1>
+            <p class="rarities_subtitle">{{ section.settings.subtitle3 }}</p>
+            <a class="button_link" href="{{ section.settings.rarities_btn_url }}">{{ section.settings.rarities_btn_text }}</a>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+      "name": "Rarities",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "title1",
+          "label": "Top Title"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle1",
+          "label": "Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "rarities_large_image",
+          "label": "Large Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "rarities_small_image",
+          "label": "Small Image"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle2",
+          "label": "Text"
+        },
+        {
+          "type": "textarea",
+          "id": "title2",
+          "label": "Bottom Title"
+        },
+        {
+          "type": "textarea",
+          "id": "subtitle3",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "rarities_btn_text",
+          "label": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "rarities_btn_url",
+          "label": "Button Link"
+        }
+      ]
+    }
+  {% endschema %}

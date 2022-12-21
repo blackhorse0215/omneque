@@ -1,0 +1,63 @@
+<section data-section-id="{{ section.id }}"
+  data-section-type="what-to-sell"
+  class="what-to-sell"
+>
+<div class="what-to-sell-wrapper">
+    <div class="what-to-sell-content">
+        <div class="content_main">
+            <h1>{{ section.settings.heading }}</h1>
+            <p>{{ section.settings.subheading }}</p>
+            <a href="{{ section.settings.button_link }}">{{ section.settings.button_text }}</a>
+        </div>
+        <div class="content_icons">
+            <div class="content_icon">
+                <img src="{{ 'ACCESS.svg' | asset_url }}">
+                <p>ACCESS</p>
+            </div>
+            <div class="content_icon">
+                <img src="{{ 'VALUE.svg' | asset_url }}">
+                <p>VALUE</p>
+            </div>
+            <div class="content_icon">
+                <img src="{{ 'SELL.svg' | asset_url }}">
+                <p>SELL</p>
+            </div>
+        </div>
+    </div>
+    <div class="what-to-sell-image">
+        <img src="{{ section.settings.img | img_url: '900x700' }}">
+    </div>
+</div>
+</section>
+{% schema %}
+{
+    "name": "What to sell",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "img",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+        },
+        {
+            "type": "textarea",
+            "id": "subheading",
+            "label": "Subheading"
+        },
+        {
+            "type": "text",
+            "id": "button_text",
+            "label": "Button Text"
+        },
+        {
+            "type": "url",
+            "id": "button_link",
+            "label": "Button Link"
+        }
+    ]
+}
+{% endschema %}

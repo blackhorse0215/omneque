@@ -1,0 +1,86 @@
+<div class="sell-faq">
+    <div class="sell_faq_heading">{{ section.settings.title }}</div>
+    <div class="sell_faq_accordion">
+        {% for block in section.blocks %}
+            <div class="tab">
+                <input type="checkbox" id="chck{{ forloop.index }}">
+                    <label class="tab-label" for="chck{{ forloop.index }}">{{ block.settings.question_heading }}</label>
+                <div class="tab-content">
+                    {{ block.settings.question_copy }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+input {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+.tab {
+  width: 100%;
+  overflow: hidden;
+}
+.tab-label {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.tab-label::after {
+    content: "+";
+    width: 1em;
+    height: 1em;
+    text-align: center;
+    transition: all .35s;
+}
+.tab-content {
+    max-height: 0;
+    padding: 0 10px;
+    background: white;
+    transition: all .35s;
+}
+input:checked ~ .tab-content {
+    max-height: 100vh;
+    padding: 1em 10px;
+}
+input:checked + .tab-label::after {
+    transform: rotate(315deg);
+}
+
+</style>
+
+{% schema %}
+  {
+    "name": "Sell FAQs",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "FAQS"
+      }
+    ],
+     "blocks":[
+		{
+          "type":"text",
+          "name":"Questions",
+          "settings":[
+              {
+                "type": "text",
+                "id": "question_heading",
+                "label": "Question"
+              },
+              {
+                  "type": "textarea",
+                  "id": "question_copy",
+                  "label": "Question Detail"
+              }
+          ]
+		}
+	]
+  }
+{% endschema %}

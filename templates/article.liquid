@@ -1,0 +1,177 @@
+{%- comment -%}
+  In order to avoid showing "success" message when we post comments
+  with invalid format (eg. blank fields), we added logic to make sure it doesn't show.
+
+  Comment help page:
+  http://docs.shopify.com/themes/liquid-variables/comment
+{%- endcomment -%}
+
+<div class="blog-detail-page">
+{% section 'static-article' %}
+
+<article role="article">
+  <div class="inner-container">
+      <div class="blog-cst">
+        {{ article.content }}
+      </div>
+    {% if article.handle == 'news/susan-bender-jewellery-eveningwear' %}
+        <div class="featured-collection featured-collection--center the-look">
+
+          {%- assign collection = collections['shop-the-look'] -%}
+
+          <div class="featured-collection__details">
+            {% if collection.title != blank %}
+              <h2 class="type-heading-1">{{ collection.title }}</h2>
+            {% endif %}
+
+            {% if collection.description != blank %}
+              <p class="type-body-regular featured-collection__subheading">{{ collection.description }}</p>
+            {% endif %}
+
+          </div>
+
+          {%- assign max_products = 3 | times: 4 -%}
+
+          <div class="featured-collection__content" data-slider>
+
+            {% for product in collection.products limit: max_products %}
+
+              <div class="featured-collection__item featured-collection__item--3">
+                {% render 'product-tile' with product: product %}
+              </div>
+
+            {% else %}
+
+              {% for i in (1..max_products) %}
+                <div class="featured-collection__item featured-collection__item--3">
+                  <div class="w-100">
+                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+
+                    <h2 class="type-body-regular mt3 mb1">
+                      {{ 'homepage.onboarding.product_title' | t }}
+                    </h2>
+                    <p class="meta ma0">{{ 1999 | money }}</p>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endfor %}
+
+          </div>
+        </div>
+    {% endif %}
+      
+      <div class="article__footer">
+        {% assign excerptDescription = article.excerpt | split:'<!-- split -->' %}
+        {% assign excerptbio = article.excerpt | split:'<!-- bio -->' %}
+        
+        <div class="af-box">
+            <div class="af-left">
+                {% if excerptDescription != blank %}
+                	{{ excerptDescription | last }}
+                {% endif %}
+            </div>
+            <div class="af-right">
+                {% if article.metafields.blog.author  %}
+                <span class="ba-name"> 
+                  <i>By</i> {{ article.metafields.blog.author }}
+                </span>
+                {% endif %}
+                <div class="blog__article-excerpt type-body-small">
+                	{% if excerptDescription != blank %}
+                      {{ excerptbio | last }}
+                    {% endif %}  
+                </div>
+                <p class="b-date"><strong>{{ 'blogs.general.published' | t }}:</strong> {{ article.published_at | date: "%a, %b %d, %Y" }}</p>
+            </div>
+        </div>
+        {% comment %}
+        {% if article.tags.size > 0 %}
+          <strong>{{ 'blogs.general.categories' | t }}:</strong>
+          <ul>
+            {% for tag in article.tags %}
+              <li><a href="{{ blog.url }}/tagged/{{ tag.handle }}">{{ tag }}</a></li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+        {% endcomment %}
+      </div>
+      <div class="article__pagination">
+        {% if blog.previous_article %}
+          <a href="{{ blog.previous_article }}" class="article__pagination-prev">
+            ← {{ 'blogs.pagination.previous' | t }}
+          </a>
+        {% endif %}
+        {% if blog.next_article %}
+          <a href="{{ blog.next_article }}" class="article__pagination-next">
+            {{ 'blogs.pagination.next' | t }} →
+          </a>
+        {% endif %}
+      </div>
+      {% render 'comments' %}
+
+    </div>
+</article>
+  {% comment %}{% endcomment %}
+  
+{% if article.handle != 'news/susan-bender-jewellery-eveningwear' %}
+  
+  {% for tag in collection.all_tags %}
+  	{{ tag }}
+  {% endfor %}
+
+  {% for tag in article.tags %}
+        {% for product in collections.all.products  %}  
+          {% if product.tags contains tag %}
+           {%  assign product_tags = tag %}
+          {% endif %}
+    {% endfor %}
+  {% endfor %}  
+  {% if product_tags != blank %}  
+  {% section 'related-product-by-tags' %}
+  {% endif %}  
+  {% render 'shared-static-sections' %}
+{% endif %}
+</div>
+
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "articleBody": "{{ article.content | strip_html }}",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ page.url }}"
+  },
+  "headline": "{{ article.title }}",
+  {% if article.excerpt != blank %}
+    "description": "{{ article.excerpt | strip_html }}",
+  {% endif %}
+  {% if article.image %}
+    {% assign image_size = article.image.width | append: 'x' %}
+    "image": [
+      "https:{{ article | img_url: image_size }}"
+    ],
+  {% endif %}
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "dateCreated": "{{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ article.author }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    {% if article.image %}
+      {% assign image_size = article.image.width | append: 'x' %}
+      "logo": {
+        "@type": "ImageObject",
+        "height": "{{ article.image.height }}",
+        "url": "https:{{ article.image | img_url: image_size }}",
+        "width": "{{ article.image.width }}"
+      },
+    {% endif %}
+    "name": "{{ shop.name }}"
+  }
+}
+</script>

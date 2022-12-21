@@ -1,0 +1,37 @@
+<div class="stonebar-carousel">
+    <div class="stonebar-carousel-copy">
+        <p class="stonebar-carousel-copy-text">{{ section.settings.title }}</p>
+    </div>
+    <div class="stonebar-carousel-main">
+        {% for block in section.blocks %}
+            <div class="stonebar-carousel-main-image">
+                <img src="{{ block.settings.image | img_url: "x600" }}" class="full-image">
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% schema %}
+{
+    "name": "Stonebar Carousel",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "title",
+        "label": "Main Text"
+      }
+    ],
+    "blocks": [
+        {
+            "name": "Carousel Images",
+            "type": "image_picker",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label":"Carousel Image"
+                }
+            ]
+        }
+    ]
+}
+{% endschema %}

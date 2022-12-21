@@ -1,0 +1,92 @@
+<div class="why-sell">
+    <div class = "why_sell_wrapper">
+    <div class = "why_sell_header">
+        {% if section.settings.title != blank %}
+            <h4 class = "why_sell_heading">{{ section.settings.title }}</h4>
+        {% endif %}
+        {% if section.settings.text != blank %}
+            <p class="why_sell_text">{{ section.settings.text }}</p>
+        {% endif %}
+    </div>
+    <div class = "curator_contents">
+        {% for block in section.blocks %}
+        <div class="curator_content_column">
+            <div class = "curator_image_wrapper">
+            {% if block.settings.curator_img %}
+                <a href = "{{ block.settings.url }}"><img src="{{ block.settings.curator_img | img_url: '300x350'}}"></a>
+            {% endif %}
+            </div>
+            <h3><a href="{{ block.settings.url }}">{{ block.settings.curator_name }}</a></h3>
+            <p>{{ block.settings.curator_bio }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+</div>
+
+<style>
+
+.slick-prev:before, .slick-next:before {
+    color: black;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.slick-prev {
+    top: -10px;
+    left: unset;
+    right: 45px;
+}
+
+.slick-next {
+    right: 15px;
+    top: -10px;
+}
+
+</style>
+
+{% schema %}
+  {
+    "name": "Curator list",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+      }
+    ],
+     "blocks":[
+		{
+          "type":"text",
+          "name":"Curators",
+          "settings":[
+              {
+                "type": "image_picker",
+                "id": "curator_img",
+                "label": "Curator Image"
+              },
+              {
+                "type": "text",
+                "id": "curator_name",
+                "label": "Curator Name"
+              },
+              {
+                  "type": "text",
+                  "id": "curator_bio",
+                  "label": "Curator Bio"
+              },
+              {
+                  "type": "url",
+                  "id": "url",
+                  "label": "Curator Link"
+              }
+          ]
+		}
+	]
+  }
+{% endschema %}

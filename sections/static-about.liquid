@@ -1,0 +1,430 @@
+<section data-component="page">
+  <div class="ourstory-banner">
+    <img src="{{ 'story_banner.jpg' | asset_url }}"/>
+  </div>
+  <div class="ourstory-banner_mobile">
+    <img src="{{ 'story_banner_mobile.jpg' | asset_url }}"/>
+  </div>
+  <div class="about-content">
+    
+    <div class="about-header">
+      <div class="section">
+        <div class="about-header-left">
+          <p>ABOUT US</p>
+          <h1 class = "story_heading">A Destination for Precious Things</h1>
+        </div>
+        <div class="about-header-right">
+          {{ section.settings.subtext }}
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="only-text-section">
+      <p>“These gems have life in them; their colours speak, say what words fail of” </p>
+      <span>George Eliot</span>
+    </div>
+    
+  <div class="about-mession">
+    <div class="mession-img">
+        {% if section.settings.mission_image != blank %}
+          <img src="{{ section.settings.mission_image | img_url:'1200x' }}"/>
+        {% endif %}
+    </div>
+      	{% comment %}<img class="pattern-left" src="{{ 'pattern2.png' | asset_url }}"/>{% endcomment %}
+		<div class="about-mession-row">
+			
+			<div class="mession-text">
+				<h2>{{ section.settings.mission_title  }}</h2>
+                {{ section.settings.mission_subtext  }}
+			</div>
+      <div class="text-columns__content_wrapper">
+        <h1 class="our-promise-header">
+          Our Promise
+        </h1>
+        <div class="text-columns__content home_usp usp_content">
+          <div class="text-columns__feature text-columns__feature--4">
+            <img src="{{ 'usp1.svg' | asset_url }}"/>
+            <p>bold <br>curation</p>
+          </div>
+          <div class="text-columns__feature text-columns__feature--4">
+            <img src="{{ 'usp2.svg' | asset_url }}"/>
+            <p>Expert<br> Authentication</p>
+          </div>
+          <div class="text-columns__feature text-columns__feature--4">
+            <img src="{{ 'usp3.svg' | asset_url }}"/>
+            <p>Responsible<br>Consumerism</p>
+          </div>
+          <div class="text-columns__feature text-columns__feature--4">
+            <img src="{{ 'usp4.svg' | asset_url }}"/>
+            <p>Luxurious<br>Sustainability</p>
+          </div>
+        </div>
+      </div>
+		</div>
+	</div>
+
+    <div class="our-story">
+        <div class="story-img" style="background-image:url({{ section.settings.story_image | img_url:'1200x' }})">
+          {% comment %}
+            {% if section.settings.story_image != blank %}
+            <img src="{{ section.settings.story_image | img_url:'1200x' }}"/>
+            {% endif %}
+          {% endcomment %}
+        </div>
+        <div class="story-text">
+          <div class="story-text-inner">
+            <h2>{{ section.settings.story_title  }}</h2>
+            {{ section.settings.story_subtext  }}
+          </div>
+        </div>
+	</div>
+
+  <div class="our-magazine">
+		<div class="magazine-img" style="background-image:url({{ section.settings.magazine_image | img_url:'1200x' }})">
+		</div>
+		<div class="magazine-text">
+      <div class="magazine-text-inner">
+        <p class = "uppercase">Services</p>
+      <ul>
+        {% for block in section.blocks %}
+          <li>
+            <h1 class="service_header">{{ block.settings.service_title }}{{ block.settings.service_subtext }}</h1>
+            
+          </li>
+        {% endfor %}
+      </ul>
+      </div>
+			
+		</div>
+	</div>
+    
+    <div class="our-buyer">
+        <!-- <img class="orb-pattern" src="{{ 'pattern3.png' | asset_url }}"/> -->
+		<div class="section">
+			<div class="orb-title">
+              <h2 class="title-underline"><span>{{ section.settings.buyer_title }}</span></h2>
+                {{ section.settings.buyer_subtext }}
+			</div>
+			<div class="orb-list">
+				<div class="orb-item">
+                    {% if section.settings.buyer_image1 !=blank %}
+						<div class="orb-bg" style="background-image:url({{ section.settings.buyer_image1 | img_url:'250x' }})"></div>
+                    {% endif %}
+					<h4>{{ section.settings.buyer_name1}} </h4>
+					<h6>{{ section.settings.buyer_info1 }} </h6>
+					<!-- <a href="{{ section.settings.buyer_url1 }}" class="orb-btn">{{ section.settings.buyer_btn1 }}</a> -->
+				</div>
+                <div class="orb-item">
+                    {% if section.settings.buyer_image2 !=blank %}
+						<div class="orb-bg" style="background-image:url({{ section.settings.buyer_image2 | img_url:'250x' }})"></div>
+                    {% endif %}
+					<h4>{{ section.settings.buyer_name2}} </h4>
+					<h6>{{ section.settings.buyer_info2 }} </h6>
+					<!-- <a href="{{ section.settings.buyer_url2 }}" class="orb-btn">{{ section.settings.buyer_btn2 }}</a> -->
+				</div>
+                <div class="orb-item">
+                    {% if section.settings.buyer_image3 !=blank %}
+						<div class="orb-bg" style="background-image:url({{ section.settings.buyer_image3 | img_url:'250x' }})"></div>
+                    {% endif %}
+					<h4>{{ section.settings.buyer_name3}} </h4>
+					<h6>{{ section.settings.buyer_info3 }} </h6>
+					<!-- <a href="{{ section.settings.buyer_url3 }}" class="orb-btn">{{ section.settings.buyer_btn3 }}</a> -->
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+	
+	<!--<div class="our-executive">
+		<div class="executive-img" style="background-image:url({{ section.settings.executive_image | img_url:'1200x' }})">
+		</div>
+		<div class="executive-text">
+            <h2>{{section.settings.executive_title  }}</h2>
+            {{section.settings.executive_subtext  }}
+		</div>
+	</div> -->
+	<!-- <div class="about-footer">
+		<img src="{{ 'footer-logo.png' | asset_url }}"/>
+		<p>NOTHING TELLS YOUR STORY LIKE JEWELLERY</p>
+	</div> -->
+    
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "About",
+    "settings": [
+      {
+        "type": "header",
+        "content": "about header"
+      },
+      {
+        "type": "richtext",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "subtext",
+        "label":"subtext"
+      },
+      {
+        "type": "header",
+        "content": "about omneque"
+      },
+      {
+        "type": "text",
+        "id": "omninue_title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "omninue_subtext",
+        "label": "Subheading"
+      },
+      {
+        "type": "header",
+        "content": "our mission"
+      },
+ 	  {
+        "type": "image_picker",
+        "id": "mission_image",
+        "label": "mission image"
+      },	
+      {
+        "type": "text",
+        "id": "mission_title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "mission_subtext",
+        "label": "Subheading"
+      },
+	  {
+        "type": "header",
+        "content": "our promise"
+      },
+ 	  {
+        "type": "image_picker",
+        "id": "promise_image1",
+        "label": "promise icon 1"
+      },	
+      {
+        "type": "text",
+        "id": "promise_title1",
+        "label": "Heading 1"
+      },
+      {
+        "type": "image_picker",
+        "id": "promise_image2",
+        "label": "promise icon 2"
+      },	
+      {
+        "type": "text",
+        "id": "promise_title2",
+        "label": "Heading 2"
+      },
+	  {
+        "type": "image_picker",
+        "id": "promise_image3",
+        "label": "promise icon 3"
+      },	
+      {
+        "type": "text",
+        "id": "promise_title3",
+        "label": "Heading 3"
+      },
+	  {
+        "type": "image_picker",
+        "id": "promise_image4",
+        "label": "promise icon 4"
+      },	
+      {
+        "type": "text",
+        "id": "promise_title4",
+        "label": "Heading 4"
+      },
+	  {
+        "type": "header",
+        "content": "our story"
+      },
+ 	  {
+        "type": "image_picker",
+        "id": "story_image",
+        "label": "Story image"
+      },	
+      {
+        "type": "text",
+        "id": "story_title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "story_subtext",
+        "label": "Subheading"
+      },
+	  {
+        "type": "header",
+        "content": "our buyer header"
+      },	
+      {
+        "type": "text",
+        "id": "buyer_title",
+        "label": "Heading"
+      },
+      {
+        "type": "richtext",
+        "id": "buyer_subtext",
+        "label": "Subheading"
+      },
+      {
+        "type": "header",
+        "content": "our buyer item"
+      },
+	  {
+        "type": "image_picker",
+        "id": "buyer_image1",
+        "label": "buyer image"
+      },
+      {
+        "type": "text",
+        "id": "buyer_name1",
+        "label": "buyer name"
+      },
+      {
+        "type": "text",
+        "id": "buyer_info1",
+        "label": "buyer info"
+      },
+	  {
+        "type": "text",
+        "id": "buyer_btn1",
+        "label": "button text"
+      },
+	  {
+        "type": "url",
+        "id": "buyer_url1",
+        "label": "buyer url"
+      },
+	  {
+        "type": "image_picker",
+        "id": "buyer_image2",
+        "label": "buyer image"
+      },
+      {
+        "type": "text",
+        "id": "buyer_name2",
+        "label": "buyer name"
+      },
+      {
+        "type": "text",
+        "id": "buyer_info2",
+        "label": "buyer info"
+      },
+	  {
+        "type": "text",
+        "id": "buyer_btn2",
+        "label": "button text"
+      },
+	  {
+        "type": "url",
+        "id": "buyer_url2",
+        "label": "buyer url"
+      },
+	  {
+        "type": "image_picker",
+        "id": "buyer_image3",
+        "label": "buyer image"
+      },
+      {
+        "type": "text",
+        "id": "buyer_name3",
+        "label": "buyer name"
+      },
+      {
+        "type": "text",
+        "id": "buyer_info3",
+        "label": "buyer info"
+      },
+	  {
+        "type": "text",
+        "id": "buyer_btn3",
+        "label": "button text"
+      },
+	  {
+        "type": "url",
+        "id": "buyer_url3",
+        "label": "buyer url"
+      },
+	  {
+        "type": "header",
+        "content": "our magazine"
+      },	
+      {
+        "type": "image_picker",
+        "id": "magazine_image",
+        "label": "magazine image"
+      },
+      {
+        "type": "text",
+        "id": "magazine_title",
+        "label": "magazine title"
+      },
+      {
+        "type": "richtext",
+        "id": "magazine_subtext",
+        "label": "magazine subtext"
+      },
+	  {
+        "type": "header",
+        "content": "our executive team"
+      },	
+      {
+        "type": "image_picker",
+        "id": "executive_image",
+        "label": "executive image"
+      },
+      {
+        "type": "text",
+        "id": "executive_title",
+        "label": "executive title"
+      },
+      {
+        "type": "richtext",
+        "id": "executive_subtext",
+        "label": "executive subtext"
+      }
+	
+	  	
+    ],
+	"blocks":
+	[
+	  {	
+		"type":"text",
+		"name":"service list",
+		"settings":[
+			{
+              "type": "image_picker",
+              "id": "service_image",
+              "label": "Service icon"
+            },	
+            {
+              "type": "text",
+              "id": "service_title",
+              "label": "Heading"
+            },
+            {
+              "type": "richtext",
+              "id": "service_subtext",
+              "label": "Subheading"
+            }
+		]
+	  }	
+
+	]
+  }
+{% endschema %}

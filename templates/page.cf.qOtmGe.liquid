@@ -1,0 +1,24 @@
+{% if page.handle == 'faq' %}
+  <section class="mw-c center ph3 ph4-ns">
+    <div class="type-body-large rte mb6">
+      {{ page.content }}
+  {% render "customer-fields", form_id: "qOtmGe" %}
+    </div>
+  </section>
+{% elsif page.handle == 'shipping-returns' %}
+{% render 'page-header' with title: page.title %}
+
+<section class="mw-c center ph3 ph4-ns">
+  <div class="type-body-large rte mb6">
+    {{ page.content }}
+  </div>
+</section>
+{% else %}
+  {% render 'page-header' with title: page.title %}
+
+  <section class="mw-c center ph3 ph4-ns">
+    <div class="type-body-large rte centered-content mb6">
+      {{ page.content }}
+    </div>
+  </section>
+{% endif %}

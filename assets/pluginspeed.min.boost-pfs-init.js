@@ -1,0 +1,1 @@
+var boostPFS=new BoostPFS;boostPFS.init(),"undefined"!=typeof boostPFSConfig&&"undefined"!=typeof boostPFSConfig.general&&"undefined"!=typeof boostPFSConfig.general.isInitFilter&&!0===boostPFSConfig.general.isInitFilter&&boostPFS.initFilter(),BoostPFS.jQ(window).on("load",function(){boostPFS.initSearchBox(),boostPFS.initAnalytics()});

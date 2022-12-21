@@ -1,0 +1,107 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="drops-ready"
+  class="jewellery-drops-ready"
+>
+  <section class="section">
+    <div class="section-inner">
+      {% if section.settings.image != blank %}
+        {% render 'responsive-image' with
+          image: section.settings.image,
+          max_width: 85,
+          max_height: 85
+        %}
+      {%endif %}
+      {% if section.settings.title != blank %}
+      <h1 class="section-title">{{ section.settings.title | escape }}</h1>
+      {% endif %}
+      <p class="subheading">
+        {{ section.settings.sub_title }}
+      </p>
+      <div class="drop-coming">
+        <ul>
+          <li class="coming-day js-timer-days">
+            <span class="time">00</span>
+            <span>DAYS</span>
+          </li>
+          <li class="coming-hour js-timer-hours">
+            <span class="time">00</span>
+            <span>HOURS</span>
+          </li>
+          <li class="coming-minute js-timer-minutes">
+            <span class="time">00</span>
+            <span>MINUTES</span>
+          </li>
+          <li class="coming-second js-timer-seconds">
+            <span class="time">00</span>
+            <span>SECONDS</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</section>
+
+<style>
+  .jewellery-drops-ready{
+    background-image:url("{{ 'Get_Ready_banner_bkgnd.gif' | asset_url }}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+
+{% if section.settings.drop_date != blank %}
+<script type="text/javascript">
+  var second = 1000,
+      minute = second * 60,
+      hour = minute * 60,
+      day = hour * 24;
+  
+  var dropDate = String('{{ section.settings.drop_date }}');
+  handleDate = dropDate.split('.');
+  
+  var countDown = new Date(handleDate[0], handleDate[1] - 1, handleDate[2]).getTime() + 17 * hour;
+  var x = setInterval(function() {
+        var now = new Date().getTime(),
+            distance = countDown - now;
+        if (distance > 0) {
+          document.querySelector('.js-timer-days .time').innerHTML = Math.floor(distance / (day)),
+          document.querySelector('.js-timer-hours .time').innerHTML = Math.floor((distance % (day)) / (hour)),
+          document.querySelector('.js-timer-minutes .time').innerHTML = Math.floor((distance % (hour)) / (minute)),
+          document.querySelector('.js-timer-seconds .time').innerHTML = Math.floor((distance % (minute)) / second);
+        }
+        if (distance < 0) { 
+          clearInterval(x);
+        }
+      }, second);
+</script>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Drops Ready",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "sub_title",
+        "label": "Sub Heading"
+      },
+      {
+        "type": "text",
+        "id": "drop_date",
+        "label": "Drop Date"
+      }
+    ]
+  }
+{% endschema %}

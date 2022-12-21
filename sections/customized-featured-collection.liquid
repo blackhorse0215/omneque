@@ -1,0 +1,217 @@
+<section id="customized_featured_collection">
+    <div class="featured_collection_wrapper inner-container">
+        <div class="featured_collection-head">
+            {% if section.settings.title != blank %}
+              <h1 class="featured_collection-title">{{ section.settings.title | escape }}</h1>
+            {% endif %}
+            {% if section.settings.subtitle != blank %}
+              <p>{{ section.settings.subtitle | escape }}</p>
+            {% endif %}
+        </div>
+        <div class="featured_collection-list">
+       
+            <div class="collection_header_wrapper">
+                <div class="filter_text">
+                    <p>Filter By</p>
+                </div>
+                
+                <div class="view_collection_wrapper">
+                    <a class="underline_link" href="pages/category#shopify-section-collection-shop-category">Explore Categories</a>
+                    <a class="underline_link rings_link" href="collections/rings">Explore Rings</a>
+                    <a class="underline_link necklaces_link" href="collections/necklaces">Explore Necklaces</a>
+                    <a class="underline_link bracelets_link" href="collections/bracelets">Explore Bracelets</a>
+                    <a class="underline_link earrings_link" href="collections/earrings">Explore Earrings</a>
+                </div>
+            </div>
+            <div class="collection_content_wrapper"> 
+            <div class="collection_menu">
+                {% for block in section.blocks %}
+                    {%- assign collection = collections[block.settings.collection] -%}
+                    {% if forloop.index == 1 %}
+                        <a class="collection_menu_item collection_{{ collection.handle }}-header active">
+                            Top Picks
+                        </a>
+                    {% else %}
+                        <a class="collection_menu_item collection_{{ collection.handle }}-header">
+                            {{ block.settings.collection_title }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="collection_products_list_wrapper">
+                {% for block in section.blocks %}
+                    {%- assign collection = collections[block.settings.collection] -%}
+                    {% if forloop.index == 1 %}
+                        <div class="featured-{{ collection.handle }}-items collection_product_items active">
+                            {% for product in collection.products limit: 6 %}
+
+                            <div class="featured-collection__item featured-collection__item--3">
+                                {% render 'product-tile' with product: product %}
+                            </div>
+
+                            {% else %}
+
+                                {% for i in (1..max_products) %}
+                                    <div class="featured-collection__item featured-collection__item--4">
+                                    <div class="w-100">
+                                        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+
+                                        <h2 class="type-body-regular mt3 mb1">
+                                        {{ 'homepage.onboarding.product_title' | t }}
+                                        </h2>
+                                        <p class="meta ma0">{{ 1999 | money }}</p>
+                                    </div>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                    <div class="featured-{{ collection.handle }}-items collection_product_items">
+                        {% for product in collection.products limit: 6 %}
+
+                        <div class="featured-collection__item featured-collection__item--3">
+                            {% render 'product-tile' with product: product %}
+                        </div>
+
+                        {% else %}
+
+                            {% for i in (1..max_products) %}
+                                <div class="featured-collection__item featured-collection__item--4">
+                                <div class="w-100">
+                                    {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                                    {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+
+                                    <h2 class="type-body-regular mt3 mb1">
+                                    {{ 'homepage.onboarding.product_title' | t }}
+                                    </h2>
+                                    <p class="meta ma0">{{ 1999 | money }}</p>
+                                </div>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            </div>
+        
+        </div>
+    </div>
+
+
+<script>
+    
+    {% for block in section.blocks %}
+        {%- assign collection = collections[block.settings.collection] -%}
+        $(".collection_{{ collection.handle }}-header").on("click", function(){
+            $('.collection_menu_item').removeClass("active");
+            $('.collection_product_items').removeClass("active");
+            $('.underline_link').removeClass("active");
+            $('.collection_{{ collection.handle }}-header').toggleClass("active");
+            $('.featured-{{ collection.handle }}-items').toggleClass("active");
+            {% if forloop.index == 2 %}
+                $('.rings_link').toggleClass("active");
+            {% elsif forloop.index == 3 %}
+                $('.necklaces_link').toggleClass("active");
+            {% elsif forloop.index == 4 %}
+                $('.bracelets_link').toggleClass("active");
+            {% elsif forloop.index == 5 %}
+                $('.earrings_link').toggleClass("active");
+            {% endif %}
+        });
+    {% endfor %}
+</script>
+    
+<style>
+    {% for block in section.blocks %}
+        {%- assign collection = collections[block.settings.collection] -%}
+        #customized_featured_collection .collection_{{ collection.handle }}-header.active{
+            opacity:1;
+        }
+        #customized_featured_collection .featured-{{ collection.handle }}-items{
+            display:none;
+        }
+        #customized_featured_collection .featured-{{ collection.handle }}-items.active{
+            display:flex;
+        }
+        .rings_link{
+            display: none;
+        }
+        .necklaces_link{
+            display: none;
+        }
+        .bracelets_link{
+            display: none;
+        }
+        .earrings_link{
+            display: none;
+        }
+        .rings_link.active{
+            display: unset;
+        }
+        .necklaces_link.active{
+            display: unset;
+        }
+        .bracelets_link.active{
+            display: unset;
+        }
+        .earrings_link.active{
+            display: unset;
+        }
+        .view_collection_wrapper{
+            display: flex;
+        }
+    {% endfor %}
+    @media (max-width: 425px){
+        .view_collection_wrapper{
+            display: block;
+        }
+    }
+</style>
+
+</section>
+
+{% schema %}
+  {
+    "name": "New Featured Collection",
+    "max_blocks": 5,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Collection list"
+      },
+	  {
+        "type": "textarea",
+        "id": "subtitle",
+        "label": "Sub text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "type": "text",
+            "id": "collection_title",
+            "label": "Collection Title"
+          },
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "New Featured Collection",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}

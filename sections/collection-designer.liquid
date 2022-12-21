@@ -1,0 +1,86 @@
+<div class="collection-slider-block">
+  <section
+    data-section-id="{{ section.id }}"
+    data-section-type="dynamic-collection-list"
+    class="section designer-list-section"
+  >
+    <div class="designer-head">
+      {% if section.settings.title != blank %}
+        <h1 class="section-title">{{ section.settings.title | escape }}</h1>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}
+        <p>{{ section.settings.subtitle | escape }}</p>
+      {% endif %}
+    </div>
+  <div class="collection-list-slider slick-slider {% render 'section-style' with outlined: section.settings.outline %}">
+
+    {% for block in section.blocks %}
+      {%- assign collection = collections[block.settings.collection] -%}
+      <div class="collection-item">
+          <a href="{{ collection.url | default: "#" }}" class="collection-list-img" {{ block.shopify_attributes }} data-index="{{ forloop.index0 }}">
+            {% if collection.image != blank or collection.products.first != blank %}
+              {%- assign image_object = collection.image | default: collection.products.first.featured_media.preview_image -%}
+              <img src="{{ image_object | img_url:'500x' }}"/>
+            {% endif %}
+          </a>
+          <div class="collection-item-info">
+            {%- assign default_label = 'homepage.onboarding.collection_title' | t -%}
+            <h1 class="type-heading-1"><a class="color-inherit" href="{{ collection.url }}">{{ collection.title | default: default_label }}</a></h1>
+            {% comment %}{% endcomment %}
+              {% if collection.description != blank %}
+                <div class="type-body-regular mb4">{{ collection.description | strip_html | truncatewords: 7 }}</div>
+              {% endif %}
+          </div>
+      </div>
+    {% endfor %}
+
+
+    {% if section.blocks.size == 0 %}
+      {% render 'no-blocks' %}
+    {% endif %}
+
+  </div>
+  </section>
+</div>
+{% schema %}
+  {
+    "name": "Designer collection list",
+    "max_blocks": 12,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Collection list"
+      },
+	  {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub text"
+      },
+      {
+        "type": "header",
+        "content": "Section style"
+      },
+      {
+        "type": "checkbox",
+        "id": "outline",
+        "label": "Outline section",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

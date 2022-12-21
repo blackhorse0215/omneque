@@ -1,0 +1,71 @@
+<section id="blog-all">
+<div class="inner-container">
+<div class = "stories_wrapper">
+    <div class = "stories_content">
+      {% for block in section.blocks %}
+      {% assign article = block.settings.article %}
+        <div class="stories_content_column">
+          <div class = "stories_image_wrapper">
+            {% if block.settings.hp_article_img %}
+            <a href = "{{ article.url }}"><img src="{{ block.settings.hp_article_img | img_url: '500x1000'}}"></a>
+            {% else %}
+            <a href = "{{ article.url }}"><img src="{{ article.image.src | img_url: '500x1000'}}"></a>
+            {% endif %}
+          </div>
+          <p>EDITORIAL</p>
+          <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+          {% if article.metafields.blog.author  %}
+              <span class="ba-name"> 
+                By {{ article.metafields.blog.author }}
+              </span>
+          {% elsif article.metafields.global.author %}
+            <span class="ba-name"> 
+              By {{ article.metafields.global.author }}
+            </span>
+          {% endif %}
+          {% if article.metafields.blog.readtime  %}
+            <span class="ba-name readtime-name">
+                {{ article.metafields.blog.readtime }}
+            </span>
+          {% elsif article.metafields.global.readtime %}
+            <span class="ba-name readtime-name">
+              {{ article.metafields.global.readtime }}
+            </span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+</section>
+{% schema %}
+  {
+    "name": "Blog post list",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Blog posts"
+      }
+    ],
+     "blocks":[
+		{
+          "type":"text",
+          "name":"Article",
+          "settings":[
+              {
+                  "type": "article",
+                  "id": "article",
+                  "label": "Article item"
+              },
+              {
+                "type": "image_picker",
+                "id": "hp_article_img",
+                "label": "Article Image"
+              }
+          ]
+		}
+	]
+  }
+{% endschema %}

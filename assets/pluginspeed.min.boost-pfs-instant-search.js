@@ -1,0 +1,1 @@
+var boostPFSInstantSearchConfig={search:{}};!function(){BoostPFS.inject(this),SearchInput.prototype.customizeInstantSearch=function(){this.$uiMenuElement,this.$element,this.id}}();

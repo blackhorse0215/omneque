@@ -1,0 +1,100 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="dynamic-customized-collage"
+  class="section customized-collage-section"
+>
+  <div class="link_wrapper">
+    <a class="underline_link" href="pages/category#shopify-section-collection-shop-category">Explore Categories</a>
+  </div>
+  
+  <div class="collage_item_wrapper">
+
+    {% for block in section.blocks %}
+      <div class="collage_item_content">
+        <feature class="collage_image_wrapper">
+          <img src="{{ block.settings.image | img_url: "600x" }}" class="collage_image">
+        </feature>
+        <p class="collage_heading"  style="max-width: {{block.settings.text_max_width}};">{{ block.settings.heading }}</p>
+        <a class="collage_link " href="{{ block.settings.link }}">{{ block.settings.link_text }}</a>
+      </div>
+  
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Customized Collage",
+    "max_blocks": 9,
+    "blocks": [
+      {
+        "type": "grid_item",
+        "name": "Item",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image",
+            "info": "This image will display as your fallback image if a video is added."
+          },
+          {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#ffffff"
+          },
+          {
+            "type": "text",
+            "id": "heading",
+            "label": "Heading"
+          },
+          {
+            "type": "range",
+            "id": "text_max_width",
+            "label": "Max width of text",
+            "min": 16,
+            "max": 38,
+            "step": 1,
+            "default": 25
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "link_text",
+            "label": "Link text"
+          },
+          {
+            "type": "select",
+            "id": "link_style",
+            "label": "Link style",
+            "options": [
+              { "value": "button", "label": "Button" },
+              { "value": "arrow_link", "label": "Link with arrow" }
+            ]
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Customized Collage",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "grid_item",
+            "settings": {
+              "heading": "Have control over your content",
+              "text_max_width": 19,
+              "link_text": "Don't forget to add a link or two",
+              "link_style": "arrow_link"
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

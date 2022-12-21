@@ -1,0 +1,110 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="{{ type }}"
+  class="section"
+>
+{% assign alignment = section.settings.heading_alignment %}
+<div class="featured-collection featured-collection--{{ alignment }} {% render 'section-style' with outlined: section.settings.outline %}">
+  <div class="featured-collection__details">
+    {% if section.settings.title != blank %}
+      <h2 class="type-heading-1 measure-narrow">{{ section.settings.title }}</h2>
+    {% endif %}
+
+    {% if section.settings.collection_subheading != blank %}
+      <p class="type-body-regular featured-collection__subheading">{{ section.settings.collection_subheading }}</p>
+    {% endif %}
+  </div>
+
+  {%- assign max_products = section.settings.products_per_row | times: section.settings.rows -%}
+
+  <div class="featured-collection__content" data-slider>
+    {% for tag in article.tags %}
+      {% for product in collections.all.products offset:4  %}
+        
+        {% if product.tags contains tag %}
+   
+        <div class="featured-collection__item featured-collection__item--{{ section.settings.products_per_row }}">
+          {% render 'product-tile' with product: product %}
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+
+  </div>
+</div>
+</section>
+
+{% schema %}
+{
+  "name": "Related products by tag",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_related_products",
+      "label": "Show  products by tag",
+      "default": false
+    },
+    {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "type": "textarea",
+        "id": "collection_subheading",
+        "label": "Subheading"
+      },
+      {
+        "type": "select",
+        "id": "heading_alignment",
+        "label": "Heading alignment",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "center",
+            "label": "Center"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "range",
+        "id": "products_per_row",
+        "label": "Products per row",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "rows",
+        "label": "Rows",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "default": 1
+      },
+      {
+        "type": "header",
+        "content": "Section style"
+      },
+      {
+        "type": "checkbox",
+        "id": "outline",
+        "label": "Outline section",
+        "default": false
+      }
+  ]
+}
+{% endschema %}
+          
+          
+          

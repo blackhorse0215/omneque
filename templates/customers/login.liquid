@@ -1,0 +1,205 @@
+<div class="register_form_wrapper">
+<div class="register-form-section">
+  <div class="register-wrapper">
+	<div class="login-left register-left">
+  		<div class="login-img" style="background-image:url({{ 'register-banner.jpg' | asset_url | '500x' }})">
+          <!-- <div class="login-caption">
+            <h2>Nothing tells your story <br/>like jewellery</h2>
+            <p>Create your account with Omnēque to get the story first: exclusive previews of our latest drops, access to our concierge and links to our jewellery experts.</p>
+            <img src="{{ 'small-logo.png' | asset_url | '52x' }}"/>
+          </div> -->
+      	</div>
+  	</div>  
+  	<div class="login-right">
+  		<div class="form-success hide" id="ResetSuccess">
+          {{ 'customer.recover_password.success' | t }}
+        </div>
+
+        <div id="CustomerLoginForm" class="login contrast" data-component="accountLogin">
+          {% form 'customer_login' %}
+            <h1 class="login__heading type-heading-display">Account Login</h1>
+            <div class="login-caption">
+              <h2>Nothing tells your story <br/>like jewellery</h2>
+              <p>Create your account with Omnēque to get the story first: exclusive previews of our latest drops, access to our concierge and links to our jewellery experts.</p>
+              <!-- <img src="{{ 'small-logo.png' | asset_url | '52x' }}"/> -->
+            </div>
+            {{ form.errors | default_errors }}
+            
+              <input type="hidden" name="checkout_url" class="concierge_login_redirect_url">
+                
+
+            <label for="CustomerEmail" class="label-hidden">
+              {{ 'customer.login.email' | t }}
+            </label>
+            <input type="email"
+                   name="customer[email]"
+                   id="CustomerEmail"
+                   class="input {% if form.errors contains 'email' %}input-error{% endif %}"
+                   placeholder="{{ 'customer.login.email' | t }}"
+                   spellcheck="false"
+                   autocomplete="off"
+                   autocapitalize="off"
+                   autofocus>
+
+            {% if form.password_needed %}
+              <label for="CustomerPassword" class="label-hidden">
+                {{ 'customer.login.password' | t }}
+              </label>
+              <input type="password"
+                     name="customer[password]"
+                     id="CustomerPassword"
+                     class="input {% if form.errors contains 'password' %}input-error{% endif %}"
+                     placeholder="{{ 'customer.login.password' | t }}">
+            {% endif %}
+
+            <input type="submit" class="bttn bttn--full" value="{{ 'customer.login.sign_in' | t }}">
+
+            <div class="login__links">
+
+              <a href="{{ routes.account_register_url }}">{{ 'layout.customer.create_account' | t }}</a>
+
+              {% if form.password_needed %}
+                &nbsp;/ <a href="#recover" id="RecoverPassword">{{ 'customer.login.forgot_password' | t }}</a>
+              {% endif %}
+
+            </div>
+          {% endform %}
+
+        </div>
+
+        <div id="RecoverPasswordForm" class="hide">
+          <div class="login contrast">
+            <h2 class="login__heading type-heading-display">{{ 'customer.recover_password.title' | t }}</h2>
+            <p class="login__meta">{{ 'customer.recover_password.subtext' | t }}</p>
+
+            {% form 'recover_customer_password' %}
+              {{ form.errors | default_errors }}
+
+              {% if form.posted_successfully? %}
+                <span class="hide reset-password-success"></span>
+              {% endif %}
+
+              <label for="RecoverEmail" class="label-hidden">
+                {{ 'customer.recover_password.email' | t }}
+              </label>
+              <input type="email"
+                    name="email"
+                    class="input"
+                    id="RecoverEmail"
+                    placeholder="{{ 'customer.recover_password.email' | t }}"
+                    spellcheck="false"
+                    autocomplete="off"
+                    autocapitalize="off">
+
+              <input type="submit" class="bttn bttn--full" value="{{ 'customer.recover_password.submit' | t }}">
+
+              <button type="button" id="HideRecoverPasswordLink" class="bttn bttn--full bttn--secondary">
+                {{ 'customer.recover_password.cancel' | t }}
+              </button>
+            {% endform %}
+
+          </div>
+        </div>
+
+        {% if shop.checkout.guest_login %}
+          <h2>{{ 'customer.login.guest_title' | t }}</h2>
+
+          {% form 'guest_login' %}
+            <input type="submit" class="bttn bttn--full" value="{{ 'customer.login.guest_continue' | t }}">
+          {% endform %}
+        {% endif %}	
+        <div class="login-social">
+          {% include 'social-icons' %}
+        </div>
+  	</div>  
+  </div>
+  	
+</div>
+
+</div>
+
+<style>
+    .register_form_wrapper{
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .register-form-section{
+      padding-top:0;
+    }
+    .register-wrapper{
+      margin: 0;
+      padding-left: 50%;
+      height:850px;
+    }
+    .register-left{
+      width: 50%;
+    }
+    .register-left .register-img{
+      height: 850px;
+      background-position: center;
+    }
+    .register-form-section .cf-form-inner .cf-form-actions .btn, .bttn{
+      position: relative;
+      left:0;
+      bottom:0;
+      transform: unset;
+      background-color: #00453f;
+      max-width: unset;
+      height: 45px;
+    }
+    .register-right{
+      padding:30px 50px;
+    }
+    .login-right .login{
+      max-width: unset;
+      padding:70px 50px;
+      margin: 0;
+      color: #000000;
+      background-color: transparent;
+    }
+    .login-left .login-img{
+      min-height: unset;
+      height: 100%;
+    }
+    .login-social{
+      border: none;
+    }
+    #RecoverPasswordForm+h2{
+      display: none;
+    }
+    #customer_login_guest{
+      display: none;
+    }
+    @media screen and (max-width: 768px){
+      .login-right .login{
+        padding: 50px 30px;
+      }
+    }
+    @media screen and (max-width: 767px){
+      .register-wrapper{
+        height: unset;
+        padding-left: 0;
+        padding-top: 0;
+      }
+      .register-left{
+        width: 100%;
+      }
+      .register-left .register-img{
+        height: 380px;
+      }
+      .login-right .login{
+        padding: 50px 30px;
+      }
+      .login-left .login-img{
+        min-height: 380px;
+      }
+    }
+    @media screen and (max-width: 520px){
+      .register-wrapper{
+        padding-top: 0;
+      }
+      .register-left .register-img{
+        height: 380px;
+      }
+    }
+</style>

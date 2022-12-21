@@ -1,0 +1,350 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="banner-slideshow"
+  class="banner-slideshow-section"
+>
+  <div class="slider stick-dots">
+    {% for block in section.blocks %}
+    <div class="slide">
+      
+      {% if block.settings.right_video != blank%}
+      <div class="slide__img right">
+        <video autoplay playsinline loop muted src="{{ block.settings.right_video }}"></video>
+      </div>
+      {% else %}
+        {% if block.settings.right_image != blank%}
+        <div class="slide__img right">
+          <img src="{{ block.settings.right_image | img_url: "960x" }}" alt="" data-lazy="{{ block.settings.right_image | img_url: "960x" }}" class="full-image animated" data-animation-in="{{ block.settings.right_image_animation }}"/>
+        </div>
+        {% else %}
+          {% if block.settings.right_color != blank%}
+          <div class="slide__img right" style="background-color: {{ block.settings.right_color }};">
+          </div>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+
+      {% if block.settings.left_video != blank%}
+      <div class="slide__img left">
+        <video autoplay playsinline loop muted src="{{ block.settings.left_video }}"></video>
+      </div>
+      {% else %}
+        {% if block.settings.left_image != blank%}
+        <div class="slide__img left">
+          <img src="{{ block.settings.left_image | img_url: "960x" }}" alt="" data-lazy="{{ block.settings.left_image | img_url: "960x" }}" class="full-image animated" data-animation-in="{{ block.settings.left_image_animation }}"/>
+        </div>
+        {% else %}
+          {% if block.settings.left_color != blank%}
+          <div class="slide__img left" style="background-color: {{ block.settings.left_color }};">
+          </div>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+      
+      <div class="slide__content {{ block.settings.alignment }}">
+        {% assign text_alignment = "text-center" %}
+        {% if block.settings.alignment == 'slide__content__left' %}
+        	{% assign text_alignment = "text-left" %}
+        {% elsif block.settings.alignment == 'slide__content__right' %}
+        	{% assign text_alignment = "text-right" %}
+        {% endif %}
+        
+        <div class="slide__content--headings {{ text_alignment }}">
+          {% if block.settings.title != blank %}
+          <p class="animated top-title" data-animation-in="{{ block.settings.title_animation }}" data-delay-in="0.3">
+            {{ block.settings.title }}
+          </p>
+          {% endif %}
+          
+          {% if block.settings.subheading != blank %}
+          <h2 class="animated title" data-animation-in="{{ block.settings.subheading_animation }}" style="max-width: {{ block.settings.text_max_width }}em;">
+            {{ block.settings.subheading }}
+          </h2>
+          {% endif %}
+          
+          {%- if block.settings.link != blank and block.settings.link_text != blank -%}
+          <a href="{{ block.settings.link }}" class="btn-light btn button-custom animated" data-animation-in="{{ block.settings.link_animation }}">{{ block.settings.link_text }}</a>
+          {%- endif -%}
+          
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" width="44px" height="44px" id="circle" fill="none" stroke="currentColor">
+      <circle r="20" cy="22" cx="22" id="test">
+      </circle>
+    </symbol>
+  </svg>
+</section>
+
+
+{% schema %}
+  {
+    "name": "Banner-Slideshow",
+    "blocks": [
+      {
+        "type": "slide",
+        "name": "Slide",
+        "settings": [
+          {
+            "type": "header",
+            "content": "Left",
+            "info": "Left"
+          },
+          {
+            "type": "text",
+            "id": "left_video",
+            "label": "Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "left_image",
+            "label": "Image",
+            "info": "Landscape orientation (3:2 w:h). 1440 x 960px minimum recommended."
+          },
+          {
+            "type": "color",
+            "id": "left_color",
+            "label": "Color",
+            "default": "#00453f"
+          },
+          {
+            "type": "select",
+            "id": "left_image_animation",
+            "label": "Image Animation",
+            "default": "zoomInImage",
+            "options": [
+              {
+                "value": "zoomInImage",
+                "label": "zoomInImage"
+              },
+              {
+                "value": "zoomOutImage",
+                "label": "zoomOutImage"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Right",
+            "info": "Right"
+          },
+          {
+            "type": "text",
+            "id": "right_video",
+            "label": "Video"
+          },
+          {
+            "type": "image_picker",
+            "id": "right_image",
+            "label": "Image",
+            "info": "Landscape orientation (3:2 w:h). 1440 x 960px minimum recommended."
+          },
+          {
+            "type": "color",
+            "id": "right_color",
+            "label": "Color",
+            "default": "#00453f"
+          },
+          {
+            "type": "select",
+            "id": "right_image_animation",
+            "label": "Image Animation",
+            "default": "zoomInImage",
+            "options": [
+              {
+                "value": "zoomInImage",
+                "label": "zoomInImage"
+              },
+              {
+                "value": "zoomOutImage",
+                "label": "zoomOutImage"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Content",
+            "info": "Content"
+          },
+		      {
+            "type": "select",
+            "id": "alignment",
+            "label": "Alignment",
+            "default": "slide__content__left",
+            "options": [
+              {
+                "label": "Left",
+                "value": "slide__content__left"
+              },
+              {
+                "label": "Center",
+                "value": ""
+              },
+              {
+                "label": "Right",
+                "value": "slide__content__right"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "range",
+            "id": "heading_max_width",
+            "label": "Max width of heading",
+            "min": 8,
+            "max": 30,
+            "step": 1,
+            "default": 16
+          },
+		      {
+            "type": "select",
+            "id": "title_animation",
+            "label": "Title Animation",
+            "default": "fadeInLeft",
+            "options": [
+              {
+                "value": "fadeInUp",
+                "label": "fadeInUp"
+              },
+              {
+                "value": "fadeInLeft",
+                "label": "fadeInLeft"
+              },
+              {
+                "value": "fadeInRight",
+                "label": "fadeInRight"
+              }
+            ]
+          },
+          {
+            "type": "textarea",
+            "id": "subheading",
+            "label": "Main Text"
+          },
+          {
+            "type": "range",
+            "id": "text_max_width",
+            "label": "Max width of text",
+            "min": 5,
+            "max": 25,
+            "step": 1,
+            "default": 14
+          },
+		      {
+            "type": "select",
+            "id": "subheading_animation",
+            "label": "Main Text Animation",
+            "default": "fadeInLeft",
+            "options": [
+              {
+                "value": "fadeInUp",
+                "label": "fadeInUp"
+              },
+              {
+                "value": "fadeInLeft",
+                "label": "fadeInLeft"
+              },
+              {
+                "value": "fadeInRight",
+                "label": "fadeInRight"
+              }
+            ]
+          },
+		      {
+            "type": "text",
+            "id": "left_title",
+            "label": "Left Text"
+          },
+          {
+            "type": "url",
+            "id": "link",
+            "label": "Link"
+          },
+          {
+            "type": "text",
+            "id": "link_text",
+            "label": "Link text",
+            "info": "The entire slide will become a link if this setting is left blank."
+          },
+		      {
+            "type": "select",
+            "id": "link_animation",
+            "label": "Link Animation",
+            "default": "fadeInLeft",
+            "options": [
+              {
+                "value": "fadeInUp",
+                "label": "fadeInUp"
+              },
+              {
+                "value": "fadeInLeft",
+                "label": "fadeInLeft"
+              },
+              {
+                "value": "fadeInRight",
+                "label": "fadeInRight"
+              }
+            ]
+          },
+          {
+            "type": "header",
+            "content": "Style"
+          },
+          {
+            "type": "range",
+            "id": "overlay_opacity",
+            "label": "Overlay opacity",
+            "min": 0,
+            "max": 100,
+            "step": 10,
+            "default": 60,
+            "unit": "%"
+          },
+          {
+            "type": "color",
+            "id": "overlay_color",
+            "label": "Overlay color",
+            "default": "#707070"
+          },
+          {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text color",
+            "default": "#ffffff"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Banner Slideshow",
+        "category": "Image",
+        "blocks": [
+          {
+            "type": "slide",
+            "settings": {
+              "title": "This is your slideshow",
+              "subheading": "Use it to set your brand's tone and create a first impression with your customers. Vibrant imagery with a lot of background accent works well for a full-screen effect."
+            }
+          },
+          {
+            "type": "slide",
+            "settings": {
+              "title": "This is your slideshow",
+              "subheading": "Use it to set your brand's tone and create a first impression with your customers. Vibrant imagery with a lot of background accent works well for a full-screen effect."
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+

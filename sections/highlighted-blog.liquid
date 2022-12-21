@@ -1,0 +1,81 @@
+<div class="blog-highlight-section">
+  <div class="inner-container">
+    <h2 class="section-title text-center">
+      {{ section.settings.title }}
+    </h2>
+    <div class="highlight-slider slick-slider"> 
+      {% for block in section.blocks %} 
+      {% assign article = articles[block.settings.article] %}
+      {% assign excerptDescription = article.excerpt | split:'<!-- split -->' %} 
+      <div class="blog-item">
+        <article class="blog__article">
+          {% if article.image %}
+          <a href="{{ article.url }}">
+            <div
+                 class="lazyload"
+                 style="padding-top:70%; background-size: cover;"
+                 data-bgset="{% render 'responsive-bg-image', image: article.image %}"
+                 role="img"
+                 aria-label="{{ article.image.alt }}"
+                 ></div>
+          </a>
+          {% endif %}
+          <div class="blog__article-content">
+
+            <div>
+              <h3 class="blog__article-heading type-heading-2">
+                <a href="{{ article.url }}">{{ article.title }}</a>
+              </h3>	
+
+              {% if article.excerpt.size > 0 %}
+              <div class="blog__article-excerpt type-body-small">{{ excerptDescription | first | truncate: 200 }}</div>
+              {% else %}
+              <div class="blog__article-excerpt type-body-small">{{ article.content | strip_html | truncate: 150 }}</div>
+              {% endif %}
+              {% if article.metafields.blog.author %}
+              <span class="author-name"> 
+                <i>By</i> {{ article.metafields.blog.author }}
+              </span>
+              {% endif %}
+              <span class="read-time">
+                {{ article.metafields.blog.readtime }}
+              </span>
+            </div>
+
+            {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+            <div class="type-heading-meta meta">{{ date }}</div>
+
+          </div>
+        </article>
+      </div>
+      {% endfor%}
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "highlighted blog list",
+    "max_blocks": 12,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "blog list"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "highlighted blog list",
+        "settings": [
+          {
+            "label": "article item",
+            "id": "article",
+            "type": "article"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

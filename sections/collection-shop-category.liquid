@@ -1,0 +1,102 @@
+<div class="shop-by-category-header">
+  <div class="shop-by-category-header-txt">
+    <div class="shop-by-category-header-txt-inner">
+    {% if section.settings.title != blank %}
+      <h2>{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <p>{{ section.settings.subtitle }}</p>
+    {% endif %}
+    </div>
+  </div>
+  <div class="shop-by-category-header-img">
+    <img src="{{ 'category_banner.jpg' | asset_url }}"/>
+  </div>
+  <div class="shop-by-category-header-img-mobile">
+    <img src="{{ 'category_banner_mobile.jpg' | asset_url }}"/>
+  </div>
+</div>
+<div class="shop-by-category">
+  	<div class="section">
+        <div class="shop-by-heading">
+          <div class="shop-by-heading-inner">
+          	<h2>Shop by Sector</h2>
+            <ul>
+              <li>
+                <a href="/collections/fine-jewellery">vintage fine jewellery</a>
+              </li>
+              <li>
+                <a href="/collections/modern-masters">modern masters</a>
+              </li>
+              <li>
+                <a href="/collections/vintage-fashion">vintage fashion jewellery</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      	<div class="sbc-list">
+          {% for block in section.blocks %}
+          	<div class="sbc-item">
+          		<div class="sbc-box">
+                    {% if block.settings.collection_url != blank %}
+                  		<a href="{{ block.settings.collection_url }}">
+                    {% endif %} 
+                    {% if block.settings.image != blank %}
+					<div class="sbc-img" 
+                         style="background-image:url({{ block.settings.image | img_url:'400x' }})">
+                    </div>
+                    {% endif %}
+                    {% if block.settings.title_text != blank %}
+                      <h4>{{ block.settings.title_text }}</h4>
+                    {% endif %}
+                    {% if block.settings.collection_url != blank %}
+                      </a>
+                    {% endif %} 
+                </div>
+          	</div>
+		  {% endfor %}
+      	</div>
+  	</div>
+</div>
+{% schema %}
+  {
+    "name": "Shop by category",
+    "max_blocks": 30,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Collection list"
+      },
+	  {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Sub text"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "text",
+        "name": "category item",
+        "settings": [
+          {
+            "type":"image_picker",
+            "id": "image",
+			"label":"collection image"
+          },
+          {
+            "type":"text",
+            "id": "title_text",
+			"label":"collection text"
+          },
+		  {
+            "type": "url",
+            "id": "collection_url",
+            "label":"Select collection link"
+          }	
+        ]
+      }
+    ]
+  }
+{% endschema %}

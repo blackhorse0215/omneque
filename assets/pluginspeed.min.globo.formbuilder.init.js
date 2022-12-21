@@ -1,0 +1,1 @@
+"undefined"!=typeof Globo.FormBuilder.initialize&&Globo.FormBuilder.initialize();

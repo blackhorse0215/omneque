@@ -1,0 +1,223 @@
+<div class="concierge-heading-wrapper">
+  <div class="concierge-heading">
+    <h1>Concierge</h1>
+    <p>Omnēque boasts an unparalleled team of industry experts dedicated to helping you to own the finest gems and jewellery.</p>
+  </div>
+  <div class="concierge-banner">
+      <div class="banner-text">
+        {{ section.settings.banner_text }}
+      </div>
+      <div class="concierge--form-button">
+        {% if customer %}
+          <input type="hidden" class="customer-email" value="{{ customer.email }}" />
+        {% else %}
+          <input type="hidden" class="customer-email" value="" />
+        {% endif %}
+        <button class="concierge-form-link btn button" type="button">Contact Personal Shopping</button>
+      </div>
+  </div>
+</div>
+
+<div class="concierge-service-wrapper">
+  <div class="concierge-service-menus">
+    <h1>Our Services</h1>
+    <ul>
+      {% for block in section.blocks %}
+        <li>
+          {% if forloop.index == 1 %}
+            <h1 class="service_menu_header service-header-{{forloop.index}} active">{{ block.settings.category_title }}{{ block.settings.category_text }}</h1>
+          {% else %}
+            <h1 class="service_menu_header service-header-{{forloop.index}}">{{ block.settings.category_title }}{{ block.settings.category_text }}</h1>
+          {% endif %}
+        </li>
+      {% endfor %} 
+    </ul>
+  </div>
+  <div class="concierge-service-imgs">
+    {% for block in section.blocks %}
+      {% if forloop.index == 1 %}
+        <img class="concierge-service-img-{{forloop.index}} concierge-service-img active" src={{ block.settings.category_img | img_url: 'x700' }}>
+      {% else %}
+        <img class="concierge-service-img-{{forloop.index}} concierge-service-img" src={{ block.settings.category_img | img_url: 'x700' }}>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% if section.settings.check  %}
+	<div class="service-cost-section">
+  <div class="cc-wrapper">
+    	<h2>{{ section.settings.service_title }}</h2>
+    	<div class="cos-box">
+    		<div class="cos-left">
+              	<h4>{{ section.settings.service_sub_title }}</h4>
+                {{ section.settings.service_text }}
+            </div>
+          	<div class="cos-img">
+                {% if section.settings.service_banner != blank %}
+				<img src="{{ section.settings.service_banner | img_url:'800x' }}"/>
+                {% endif %}
+            </div>
+    	</div>
+    	<div class="cos-bottom">
+          	<h6>{{ section.settings.service_bottom_title}}</h6>
+            <ul class="contact-link">
+              {% if section.settings.phone !=blank  %}
+              	<li><a href="tel:{{ section.settings.phone}}"><img src="{{ 'phone-alt.svg' | asset_url }}"  /></a></li>
+              {% endif %}
+              {% if section.settings.email !=blank  %}	
+              	<li><a href="mailto:{{ section.settings.email }}"><img src="{{ 'email.svg' | asset_url }}"  /></a></li>
+              {% endif %}
+              {% if section.settings.whatsup !=blank  %}	
+              	<li><a href="tel:{{ section.settings.whatsup }}"><img src="{{ 'whatsapp.svg' | asset_url }}"  /></a></li>
+              {% endif %}
+          	</ul>
+    	</div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+  if (window.location.href.indexOf("jewellery-concierge#category2") > -1) {
+    $('.service_menu_header').removeClass("active");
+    $('.service-header-2').addClass('active');
+    {% for block in section.blocks %}
+      if ($('.service-header-{{forloop.index}}').hasClass('active')) {
+        $('.concierge-service-img').removeClass('active');
+        $('.concierge-service-img-{{forloop.index}}').addClass("active");
+      }
+    {% endfor %} 
+  }
+  if (window.location.href.indexOf("jewellery-concierge#category3") > -1) {
+    $('.service_menu_header').removeClass("active");
+    $('.service-header-3').addClass('active');
+    {% for block in section.blocks %}
+      if ($('.service-header-{{forloop.index}}').hasClass('active')) {
+        $('.concierge-service-img').removeClass('active');
+        $('.concierge-service-img-{{forloop.index}}').addClass("active");
+      }
+    {% endfor %} 
+  }
+  if (window.location.href.indexOf("jewellery-concierge#category4") > -1) {
+    $('.service_menu_header').removeClass("active");
+    $('.service-header-4').addClass('active');
+    {% for block in section.blocks %}
+      if ($('.service-header-{{forloop.index}}').hasClass('active')) {
+        $('.concierge-service-img').removeClass('active');
+        $('.concierge-service-img-{{forloop.index}}').addClass("active");
+      }
+    {% endfor %} 
+  }
+  if (window.location.href.indexOf("jewellery-concierge#category5") > -1) {
+    $('.service_menu_header').removeClass("active");
+    $('.service-header-5').addClass('active');
+    {% for block in section.blocks %}
+      if ($('.service-header-{{forloop.index}}').hasClass('active')) {
+        $('.concierge-service-img').removeClass('active');
+        $('.concierge-service-img-{{forloop.index}}').addClass("active");
+      }
+    {% endfor %} 
+  }
+  $('.service_menu_header').click(function() {
+    $('.service_menu_header').removeClass("active");
+  	$(this).addClass("active");
+    {% for block in section.blocks %}
+      if ($('.service-header-{{forloop.index}}').hasClass('active')) {
+        $('.concierge-service-img').removeClass('active');
+        $('.concierge-service-img-{{forloop.index}}').addClass("active");
+      }
+    {% endfor %} 
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "concierge",
+    "settings": [
+		{
+          "type":"image_picker",
+          "id":"banner_img",
+          "label":"Banner text"
+		},
+		{
+          "type":"richtext",
+          "id":"banner_text",
+          "label":"Banner text"
+		},
+		{
+          "type":"header",
+          "content":"service bottom information"
+		},
+        {
+			"type":"checkbox",
+            "id":"check",
+            "label":"Enable bottom info",
+		    "default":false		
+		},
+		{
+          "type":"text",
+          "id":"service_title",
+          "label":"section title"
+		},
+        {
+          "type":"image_picker",
+          "id":"service_banner",
+          "label":"Serivce banner"
+		},
+        {
+          "type":"text",
+          "id":"service_sub_title",
+          "label":"section sub title"
+		},
+		{
+          "type":"richtext",
+          "id":"service_text",
+          "label":"Service text"
+		},
+        {
+          "type":"text",
+          "id":"service_bottom_title",
+          "label":"section bottom title"
+		},
+		{
+          "type":"text",
+          "id":"phone",
+          "label":"Phone number"
+		},
+		{
+          "type":"text",
+          "id":"email",
+          "label":"Email Address"
+		},
+		{
+          "type":"text",
+          "id":"whatsup",
+          "label":"Whatsup number"
+		}
+	],
+    
+	"blocks":[
+	  {
+		"name":"category item",
+		"type":"text",
+		"settings": [
+			{
+              "type":"image_picker",
+              "id":"category_img",
+              "label":"Category image"
+            },
+			{
+              "type":"text",
+              "id":"category_title",
+              "label":"Category title"
+            },
+            {
+              "type":"richtext",
+              "id":"category_text",
+              "label":"Category text"
+            }
+         ]
+	  }
+	]
+  }
+{% endschema %}
+

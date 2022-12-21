@@ -1,0 +1,277 @@
+{% assign file_extension = 'png' %}
+
+<div class="product__details">
+  <div class="product__heading">
+    
+
+    <h1 class="product__title type-heading-1">
+      {% if is_placeholder %}
+        {{ 'homepage.onboarding.product_title' | t }}
+      {% else %}
+        {{ product.title }}
+      {% endif %}
+    </h1>
+    {% if show_vendor %}
+      {% unless product.tags contains 'stone-bar' %}  
+      <p class="product__vendor">
+         <span itemprop="brand" class="vendor">{{ product.vendor | link_to_vendor }}</span> 
+      </p>
+      {% endunless %}
+    {% endif %}
+    <div data-price-wrapper>
+      {% if product.available%}
+        <span data-product-price class="meta">
+          {% if is_placeholder %}
+            {{ 'homepage.onboarding.product_price' | t }}
+          {% else %}
+            {{ current_variant.price | money_without_trailing_zeros }}
+          {% endif %}
+        </span>
+      {% endif %}
+
+
+        <span class="visually-hidden" data-compare-text>{{ 'products.product.regular_price' | t }}</span>
+        <s class="meta" data-compare-price>
+          {% if current_variant.compare_at_price > current_variant.price %}
+            {{ current_variant.compare_at_price | money }}
+          {% endif %}
+        </s>
+
+    </div>
+    <div class="label-icon">
+        {% if product.metafields["global"]["curators-pick"] != blank and product.metafields["global"]["curators-pick"] != 'No' and product.metafields["global"]["curators-pick"] != 'no' %}
+        	<img src="{{ 'promise1.png' | asset_url }}" title="Curator's Top Pick" />
+        {% endif %}
+        {% if product.metafields["global"]["exclusivity"] != blank and product.metafields["global"]["exclusivity"] != 'No' and product.metafields["global"]["exclusivity"] != 'no' %}
+        	<img src="{{ 'promise1.png' | asset_url }}" title="Exclusive to Omneque" />
+      	{% endif %}
+    </div>
+    <div class="product-extra-info">
+	  {% if  product.metafields["global"]["jewellery-sector"]  != blank %}
+        <p><b>Jewellery Sector:</b> {{ product.metafields["global"]["jewellery-sector"] }}</p>
+      {% endif %}
+      {% if product.metafields["global"]["curated-by"] != blank %}
+        {% if product.tags contains 'stone-bar' %}
+        <p><b>Authenticated By:</b> {{ product.metafields["global"]["curated-by"] }}</p>
+        {% else %}
+        <p><b>Curated By:</b> {{ product.metafields["global"]["curated-by"] }}</p>
+        {% endif %}
+        
+      {% endif %}
+      {% comment %}
+      {% if product.metafields["global"]["curators-pick"] != blank and product.metafields["global"]["curators-pick"] != 'No' and product.metafields["global"]["curators-pick"] != 'no' %}
+        <p><b>Curator's Pick:</b> <img src="{{ 'promise1.png' | asset_url }}"/></p>
+      {% endif %}
+      {% if product.metafields["global"]["exclusivity"] != blank and product.metafields["global"]["exclusivity"] != 'No' and product.metafields["global"]["exclusivity"] != 'no' %}
+        <p><b>Exclusive:</b> <img src="{{ 'promise1.png' | asset_url }}" /></p>
+      {% endif %}
+      {% endcomment %}
+      {% if product.metafields["global"]["main-material"] !=blank%}
+        <p><b>Main Material:</b> {{ product.metafields["global"]["main-material"] }}</p>
+      {% endif %}
+		  {% if product.metafields["global"]["period"] !=blank%}
+        {% unless product.tags contains 'stone-bar' %}
+          <p><b>Period: </b> {{ product.metafields["global"]["period"] }}</p>
+        {% endunless %}      
+      {% endif %}
+      {% unless product.tags contains 'stone-bar' %}
+        {% if product.metafields["global"]["condition-report"] !=blank%}
+          {% if product.metafields["global"]["condition-report"] == "Excellent Condition" or product.metafields["global"]["condition-report"] == "Excellent"%}
+          <p><b>Condition Report: </b> Very Good</p>
+          {% else %}
+          <p><b>Condition Report: </b> {{ product.metafields["global"]["condition-report"] }}</p>
+          {% endif %}
+        {% endif %}
+      {% endunless %}
+      {% if product.metafields["global"]["Carats"] !=blank%}
+      <p><b>Carats: </b> {{ product.metafields["global"]["Carats"] }}</p>
+      {% endif %}
+      
+    </div>
+    
+  </div>
+  
+    	
+  </div>
+  <div>
+    {% if product != blank %}
+
+      {% form 'product', product, data-product-form: '', data-product-handle: product.handle %}
+
+        {% unless product.has_only_default_variant %}
+          {% for option in product.options_with_values %}
+            <div class="js-enabled mb3">
+
+                <label for="Option{{ option.position }}" class="dib mb2">
+                  {{ option.name }}
+                </label>
+
+                {% if show_swatches %}
+                  {%- assign option_name = option.name | downcase -%}
+                  {%- assign option_setting = settings.swatch_option | downcase -%}
+
+                  {% if option_name == option_setting %}
+                    <div class="product__color-swatches" data-product-swatches data-product-option="Option{{ option.position }}">
+                      {% for value in option.values %}
+                        <a
+                          href="#"
+                          data-product-swatch
+                          data-product-swatch-option="{{ value }}"
+                          class="product__color-swatch {% if option.selected_value == value %}selected{% endif %}"
+                          style="background-image: url({{ value | handle | append: '.' | append: file_extension | asset_url }})"
+                          tabindex="0"
+                        >
+                        </a>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endif %}
+
+                {% comment %}
+                  All inputs that have `name=options[Name]` will be picked up by
+                  ProductForm, registered as an option input, and made available
+                  at ProductForm.optionsInputs
+                {% endcomment %}
+                <div class="select-wrapper">
+                  <select
+                    id="Option{{ option.position }}"
+                    name="options[{{ option.name | escape }}]"
+                    class="input-reset input w-100"
+                  >
+                    {% for value in option.values %}
+                      <option
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}selected="selected"{% endif %}>
+                          {{ value }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+            </div>
+          {% endfor %}
+        {% endunless %}
+
+        {% comment %}
+          In order for this form to submit, it needs to contain an input with name="id".
+          ProductForm() will automatically create this input (or make sure it has the
+          right value set if it already exists) on form submit based on the
+          currently selected variant. However, if JS is disabled we need a fallback.
+
+          Include a single <select> element which allows users to select all variants
+          as a fallback and present it only when JS is disabled. In addition,
+          make sure you hide the option inputs declared above, like we do with the
+          `.js-enabled` class which only shows its contents when JS is enabled.
+        {% endcomment %}
+        <select data-variant-select name="id" class="select-variant">
+          {% for variant in product.variants %}
+            <option
+              {% if variant == current_variant %}selected="selected"{% endif %}
+              {% unless variant.available %}disabled="disabled"{% endunless %}
+              value="{{ variant.id }}">
+                {{ variant.title }}
+            </option>
+          {% endfor %}
+        </select>
+
+
+        {% comment %}
+          Any input with `name="quantity"` will be picked up by ProductForm and
+          registered as a quantity input. If a quantity input is not included, a
+          default quantity of 1 is assumed.
+        {% endcomment %}
+        {%- if show_quantity_input -%}
+          <div class="mb3">
+            {% comment %}
+            <label for="Quantity" class="dib mb2">{{ 'products.product.quantity' | t }} : </label>
+            <span class="qty-text">1</span>
+            
+              <div class="cart-quantity">
+                <button type="button" class="qty-btn qtyminus">-</button>
+                <input type="number" id="Quantity" name="quantity" value="1" min="1" class="input-reset input w-100">
+                <button type="button" class="qty-btn qtyplus">+</button>
+              </div>
+            {% endcomment %}
+          </div>
+        {%- endif -%}
+        
+        <input type="hidden" class="product-quantity" value="{{ current_variant.inventory_quantity }}" />
+    	<span class="filled-cart hide">Sold</span>
+     
+        <button
+          type="button"
+          class="bttn bttn--full add-to-cart {% if enable_payment_button %}bttn--secondary{% endif %} "
+          data-add-button
+          data-lang-available="{{ 'products.product.add_to_cart' | t }}"
+          data-lang-sold-out="{{ 'products.product.sold_out' | t }}"
+          {% unless current_variant.available %}disabled="disabled"{% endunless %}
+        >
+
+          <span class="bttn__spinner">
+            <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              width="20px" height="20px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+            <path fill="currentColor" d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+              <animateTransform attributeType="xml"
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.6s"
+                repeatCount="indefinite"/>
+              </path>
+            </svg>
+          </span>
+
+          <span data-add-button-text>
+            {% if current_variant.available %}
+              {{ 'products.product.add_to_cart' | t }}
+            {% else %}
+              {{ 'products.product.sold_out' | t }}
+            {% endif %}
+          </span>
+
+        </button>
+    
+        <div class="concierge--form-button">
+          {% if customer %}
+            <input type="hidden" class="customer-email" value="{{ customer.email }}" />
+          {% else %}
+            <input type="hidden" class="customer-email" value="" />
+          {% endif %}
+          <button class="concierge-form-link btn button" type="button">Contact the Concierge</button>
+        </div>
+
+    {% capture the_snippet_fave %}{% render 'socialshopwave-widget-fave' %}{% endcapture %}
+    {% unless the_snippet_fave contains 'Liquid error' %}
+    {{ the_snippet_fave }}
+    {% endunless %}    
+		
+        {% comment %}
+          https://help.shopify.com/en/themes/customization/store/dynamic-checkout-buttons
+        {% endcomment %}
+        {% if enable_payment_button %}
+          {{ form | payment_button }}
+        {% endif %}
+        
+      {% endform %}
+
+    {% endif %}
+  </div>
+  {% comment %}
+  <div class="product__description type-body-regular rte">
+    {% if is_placeholder %}
+      {{ 'homepage.onboarding.product_description' | t }}
+    {% else %}
+      {{ product.description }}
+    {% endif %}
+  </div>
+    {% endcomment %}
+
+  
+
+  {% if show_share_buttons %}
+    {% render 'social-sharing', share_title: product.title, share_permalink: product.url, share_image: product %}
+  {% endif %}
+
+  
+
+</div>

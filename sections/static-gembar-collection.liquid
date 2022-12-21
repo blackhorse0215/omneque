@@ -1,0 +1,118 @@
+{% render 'usp-bar' %}
+  	<header role="banner" class="section">
+      <div class="section--standard flex flex-wrap">
+        <div
+          class="
+            collection__details
+            {% if section.settings.show_collection_image and collection.image == blank %}collection__details--no-image{% endif %}
+          "
+        >
+          <p class="type-heading-meta meta mt0 mb3">
+            {{ 'collections.general.name' | t }}
+          </p>
+          <h1 class="type-heading-1 mv3 ma0">{{ collection.title }}</h1>
+          {% if collection.description != blank %}
+            <div class="type-body-regular rte measure">
+              {{ collection.description }}
+            </div>
+          {% endif %}
+          {% if section.settings.btnlink != blank %}
+          	<a href="{{ section.settings.btnlink }}" class="bttn mt3">{{ section.settings.btntext }}</a>
+          {% endif %}
+        </div>
+
+        {% if section.settings.show_collection_image and collection.image != blank %}
+          <div
+            class="lazyload collection__image"
+            data-bgset="{% render 'responsive-bg-image', image: collection.image %}"
+            role="img"
+            aria-label="{{ collection.image.alt }}"
+          ></div>
+        {% endif %}
+      </div>
+   </header>
+
+{% schema %}
+  {
+    "name": "Gembar collection",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_collection_image",
+        "label": "Show collection image",
+        "default": true
+      },
+	  {
+        "type": "text",
+        "id": "btntext",
+        "label": "button text"
+      },
+      {
+        "type": "url",
+        "id": "btnlink",
+        "label": "button link"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_swatches",
+        "label": "Show swatches",
+        "default": false
+      },
+      {
+        "type": "range",
+        "id": "collection_products_per_row",
+        "label": "Products per row",
+        "min": 2,
+        "max": 4,
+        "step": 1,
+        "default": 4
+      },
+      {
+        "type": "checkbox",
+        "id": "filter_brands",
+        "label": "Filter by brands",
+        "default": false
+      },
+	  {
+        "type": "checkbox",
+        "id": "filter_type",
+        "label": "Filter by categories",
+        "default": false
+      }
+    ],
+    "max_blocks": 3,
+    "blocks": [
+      {	
+        "type": "text",
+        "name": "USP list",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "range",
+            "id": "image_max_width",
+            "label": "Max image width",
+            "min": 10,
+            "max": 100,
+            "step": 10,
+            "unit": "%",
+            "default": 100
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "subheading",
+            "label": "Subheading"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

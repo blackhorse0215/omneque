@@ -1,0 +1,276 @@
+<script src='{{ 'particles.js' | asset_url }}' ></script>
+<div id="christmas_page">
+<div class="shop-by-category-header edits-header">
+    
+    <div class="shop-by-category-header-img">
+      <img src="{{ 'christmas_banner.jpg' | asset_url }}"/>
+    </div>
+    <div class="shop-by-category-header-img-mobile"> 
+      <img src="{{ 'christmas_banner_mobile.jpg' | asset_url }}"/>
+    </div>
+  </div>
+  <div class="shop-by-category edits-content" id="christmas_content">
+        <div class="section">
+          <div class="shop-by-heading">
+            <div class="shop-by-heading-inner">
+                <div class="shop-by-category-header-txt">
+                    <div class="shop-by-category-header-txt-inner">
+                    {% if section.settings.title != blank %}
+                      <h2>{{ section.settings.title }}</h2>
+                    {% endif %}
+                    {% if section.settings.subtitle != blank %}
+                      <p>{{ section.settings.subtitle }}</p>
+                    {% endif %}
+                    <!-- <a href="meet-the-curators" class="uppercase edits_link">Meet the Curators</a> -->
+                    </div>
+                  </div>
+                <!-- <h2>Our Community</h2>
+              <ul>
+                <h1>CURATORS</h1>
+                <li>
+                  <a href="/pages/meet-the-curators#buyer-full-block-1">Joanna Hardy</a>
+                </li>
+                <li>
+                  <a href="/pages/meet-the-curators#buyer-full-block-2">Vivienne Becker</a>
+                </li>
+                <li>
+                  <a href="/pages/meet-the-curators#buyer-full-block-3">Carmen Haid</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/the-mens-edit-unpicked">Bitten by a Foxe</a>
+                </li>
+              </ul>
+              <ul>
+                <h1>FIRST PERSON</h1>
+                <li>
+                  <a href="/blogs/news/earcuff-jewellery-shay">Tiffanie Darke</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/elizabeth-day-signet-rings">Elizabeth Day</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/alya-mooro-on-arab-girls-and-jewellery">Alya Mooro</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/first-person-maame-blue">Maame Blue</a>
+                </li>
+              </ul>
+              <ul>
+                <h1>WRITERS</h1>
+                <li>
+                  <a href="/blogs/news/time-for-men-to-shine">Mark O'Flaherty</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/once-again-with-feeling">Kate Spicer</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/gemstones-rubies-sapphires-jewellery-stones">Osman Ahmed</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/the-real-deal">Annabel Davidson</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/why-jewellery-matters">Carol Wooton</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/what-s-in-a-name">Jemima Sissons</a>
+                </li>
+                <li>
+                  <a href="/blogs/news/rings-of-attraction">Rowan Pelling</a>
+                </li>
+              </ul> -->
+            </div>
+          </div>
+            <div class="sbc-list">
+            {% for block in section.blocks %}
+                <div class="sbc-item">
+                    <div class="sbc-box">
+                      {% if block.settings.collection_url != blank %}
+                            <a href="{{ block.settings.collection_url }}">
+                      {% endif %} 
+                      {% if block.settings.image != blank %}
+                      <div class="sbc-img" 
+                           style="background-image:url({{ block.settings.image | img_url:'450x' }})">
+                      </div>
+                      {% endif %}
+                      {% if block.settings.title_text != blank %}
+                        <h4>{{ block.settings.title_text }}</h4>
+                      {% endif %}
+                      {% if block.settings.collection_url != blank %}
+                        </a>
+                      {% endif %} 
+                  </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+  </div>
+</div>
+
+<script>
+    particlesJS("christmas_content", {
+  "particles": {
+    "number": {
+      "value": 400,
+      "density": {
+        "enable": true,
+        "value_area": 800
+      }
+    },
+    "color": {
+      "value": "#ffffff"
+    },
+    "shape": {
+      "type": "image",
+      "stroke": {
+        "width": 3,
+        "color": "#fff"
+      },
+      "polygon": {
+        "nb_sides": 5
+      },
+      "image": {
+        "src": "http://www.dynamicdigital.us/wp-content/uploads/2013/02/starburst_white_300_drop_2.png",
+        "width": 100,
+        "height": 100
+      }
+    },
+    "opacity": {
+      "value": 0.7,
+      "random": false,
+      "anim": {
+        "enable": false,
+        "speed": 1,
+        "opacity_min": 0.1,
+        "sync": false
+      }
+    },
+    "size": {
+      "value": 5,
+      "random": true,
+      "anim": {
+        "enable": false,
+        "speed": 20,
+        "size_min": 0.1,
+        "sync": false
+      }
+    },
+    "line_linked": {
+      "enable": false,
+      "distance": 50,
+      "color": "#ffffff",
+      "opacity": 0.6,
+      "width": 1
+    },
+    "move": {
+      "enable": true,
+      "speed": 5,
+      "direction": "bottom",
+      "random": true,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false,
+      "attract": {
+        "enable": true,
+        "rotateX": 300,
+        "rotateY": 1200
+      }
+    }
+  },
+  "interactivity": {
+    "detect_on": "canvas",
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode":  "bubble"
+      },
+      "onclick": {
+        "enable": true,
+        "mode": "repulse"
+      },
+      "resize": true
+    },
+    "modes": {
+      "grab": {
+        "distance": 150,
+        "line_linked": {
+          "opacity": 1
+        }
+      },
+      "bubble": {
+        "distance": 200,
+        "size": 40,
+        "duration": 2,
+        "opacity": 8,
+        "speed": 3
+      },
+      "repulse": {
+        "distance": 200,
+        "duration": 0.2
+      },
+      "push": {
+        "particles_nb": 4
+      },
+      "remove": {
+        "particles_nb": 2
+      }
+    }
+  },
+  "retina_detect": true
+});
+</script>
+
+<style>
+    #christmas_content{
+        position: relative;
+        color: #ffffff;
+    }
+    .particles-js-canvas-el{
+        position:absolute;
+        top: 0;
+        z-index: -1;
+        background-color: #00453f;
+    }
+</style>
+  {% schema %}
+    {
+      "name": "Edits",
+      "max_blocks": 30,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Edits"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Sub text"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "text",
+          "name": "Edits item",
+          "settings": [
+            {
+              "type":"image_picker",
+              "id": "image",
+              "label":"collection image"
+            },
+            {
+              "type":"text",
+              "id": "title_text",
+              "label":"collection text"
+            },
+            {
+              "type": "url",
+              "id": "collection_url",
+              "label":"Select collection link"
+            }	
+          ]
+        }
+      ]
+    }
+  {% endschema %}

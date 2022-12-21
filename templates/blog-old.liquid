@@ -1,0 +1,325 @@
+{% assign blogCount = blog.articles.size %}
+{% paginate blog.articles by 100 %}
+<div class="blog_heading">
+  {%- assign blog_title = blog.title -%}
+
+  {% if current_tags %}
+    {% capture blog_title %}{{ blog.title | link_to: blog.url }} &mdash; {{ current_tags.first }}{% endcapture %}
+  {% endif %}
+  {% comment %}	
+  <div class="flex-ns justify-between-ns items-center-ns mt4 mb4 mb3-ns tc tl-ns">
+    <h2 class="dn-ns page-header__crumbs type-heading-meta mb2"><a href="{{ routes.root_url }}" class="color-inherit">{{ 'general.meta.home' | t }}</a></h2>
+    <a href="/blogs/{{ blog.handle }}.atom" class="blog__rss underline dn di-ns">{{ 'general.meta.rss' | t }}</a>
+  </div>
+  {% endcomment %}
+  <h1 class="ma0 type-heading-1">{{ blog_title }}</h1>
+  {%- if blog.all_tags.size > 0 -%}
+      <ul class="Blog_TagList">
+        <li>
+          <a href="/blogs/{{ blog.handle }}" class="{% if current_tags == blank %}is-active{% endif %}">All</a>
+        </li>
+        {%- for tag in blog.all_tags -%}	
+          <li>
+            <a href="/blogs/{{ blog.handle }}/tagged/{{ tag | handle }}" class="Heading Link Link--primary Text--subdued u-h8 {% if current_tags contains tag %}is-active{% endif %}">{{ tag }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+  {%- endif -%}
+</div>
+
+<div class="blog_container">
+  {% comment %}
+
+  Article Previews
+  ====================
+  {% endcomment %}
+  
+  <section class="blog_articles">
+    {%- if  current_tags == blank -%}
+    <div class="blog-full-article">
+      <div class="inner-container">
+        
+        {% for article in blog.articles %}
+            {% assign articleUrl = section.settings.first_article %}
+        		{{ article.articleUrl }}
+            {%- if current_tags == blank  and  forloop.first -%}
+        	  	
+              {% assign excerptDescription = article.excerpt | split:'<!-- split -->' %}   
+              <div class="blog-box">
+                 <article class="blog__article">
+                      {% if article.image %}
+                        <a href="{{ article.url }}">
+                          <div
+                            class="lazyload"   
+                            style="padding-top:45%; background-size: cover;"
+                            data-bgset="{% render 'responsive-bg-image', image: article.image %}"
+                            role="img"
+                            aria-label="{{ article.image.alt }}"
+                          ></div>
+                        </a>
+                      {% endif %}
+                      <div class="blog__article-content">
+                        <div>
+                          <h3 class="blog__article-heading type-heading-2 stories-h">
+                            <a href="{{ article.url }}">{{ article.title }}</a>
+                          </h3>
+                          <div class="blog__article-excerpt type-body-small stories-p">{{ excerptDescription | first | truncate: 200 }}</div>
+                          {% if article.metafields.blog.author  %}
+                          <span class="author-name stories-authorname"> 
+                            <i>By</i> {{ article.metafields.blog.author }}
+                          </span>
+                          {% endif %}
+                          <span class="read-time stories-readtime">
+                            	{{ article.metafields.blog.readtime }}
+                          </span>
+                        </div>
+                        {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+                        <div class="type-heading-meta meta">{{ date }}</div>
+                      </div>
+                 </article>
+				</div>
+            {% endif %}
+       {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% comment %}
+    {%- if current_tags != blank -%}
+    	<div class="blog-highlight-section">
+          <div class="inner-container">
+            <div class="highlight-slider slick-slider {% if blogCount == 1%}single{% endif %} "> 
+              {% for article in blog.articles | limit:4 %} 
+              {% if article.tags == current_tags %}
+              {% assign excerptDescription = article.excerpt | split:'<!-- split -->' %} 
+              <div class="blog-item">
+                <article class="blog__article">
+                  {% if article.image %}
+                  <a href="{{ article.url }}">
+                    <div
+                         class="lazyload"
+                         style="padding-top:70%; background-size: cover;"
+                         data-bgset="{% render 'responsive-bg-image', image: article.image %}"
+                         role="img"
+                         aria-label="{{ article.image.alt }}"
+                         ></div>
+                  </a>
+                  {% endif %}
+                  <div class="blog__article-content">
+
+                    <div>
+                      <h3 class="blog__article-heading type-heading-2">
+                        <a href="{{ article.url }}">{{ article.title }}</a>
+                      </h3>	
+                      
+						{% if article.excerpt.size > 0 %}
+                            <div class="blog__article-excerpt type-body-small">{{ excerptDescription | first | truncate: 200 }}</div>
+                            {% else %}
+                            <div class="blog__article-excerpt type-body-small">{{ article.content | strip_html | truncate: 150 }}</div>
+                            {% endif %}
+                      {% if article.metafields.blog.author %}
+                      <span class="author-name"> 
+                        <i>By</i> {{ article.metafields.blog.author }}
+                      </span>
+                      {% endif %}
+                      <span class="read-time">
+                        {{ article.metafields.blog.readtime }}
+                      </span>
+                    </div>
+
+                    {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+                    <div class="type-heading-meta meta">{{ date }}</div>
+
+                  </div>
+                </article>
+			  </div>
+
+              {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+    {% endif %}
+    
+    {% endcomment %}
+    {%- if  current_tags == blank -%}
+        {% comment %}
+    	<div class="blog-highlight-section">
+          <div class="inner-container">
+              {% if current_tags == blank %}
+                <h2 class="section-title text-center">
+                  HIGHLIGHTS
+                </h2>
+              {% endif %}
+              <div class="highlight-slider slick-slider"> 
+                  {% for article in blog.articles | offset:1 | limit:3 %} 
+                {% assign excerptDescription = article.excerpt | split:'<!-- split -->' %} 
+                  <div class="blog-item">
+                          <article class="blog__article">
+                            {% if article.image %}
+                              <a href="{{ article.url }}">
+                                <div
+                                  class="lazyload"
+                                  style="padding-top:70%; background-size: cover;"
+                                  data-bgset="{% render 'responsive-bg-image', image: article.image %}"
+                                  role="img"
+                                  aria-label="{{ article.image.alt }}"
+                                ></div>
+                              </a>
+                            {% endif %}
+                            <div class="blog__article-content">
+
+                              <div>
+                                <h3 class="blog__article-heading type-heading-2">
+                                  <a href="{{ article.url }}">{{ article.title }}</a>
+                                </h3>	
+                                
+                                {% if article.excerpt.size > 0 %}
+                                  <div class="blog__article-excerpt type-body-small">{{ excerptDescription | first | truncate: 200 }}</div>
+                                {% else %}
+                                  <div class="blog__article-excerpt type-body-small">{{ article.content | strip_html | truncate: 150 }}</div>
+                                {% endif %}
+                                {% if article.metafields.blog.author %}
+                                <span class="author-name"> 
+                                  <i>By</i> {{ article.metafields.blog.author }}
+                                </span>
+                                {% endif %}
+                                <span class="read-time">
+                                      {{ article.metafields.blog.readtime }}
+                                </span>
+                              </div>
+
+                              {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+                              <div class="type-heading-meta meta">{{ date }}</div>
+
+                            </div>
+                          </article>
+                        </div>
+                {% endfor%}
+              </div>
+          </div>
+    	</div>
+        {% endcomment %}
+        {% section 'highlighted-blog' %} 
+    {% endif %}
+    
+    {% if current_tags == blank and blogCount > 1 %}
+      <div class="blog-list-section">
+          <div class="inner-container">
+            <h2 class="section-title text-center">
+              {% if current_tags != blank %}{{ current_tags }}{% endif %} More Stories 
+            </h2>
+            <div class="blog-grid-list blog_grid">
+                <div class="blog-sizer"></div>
+                {% for article in blog.articles | offset:1 %}
+                      {% assign excerptDescription = article.excerpt | split:'<!-- split -->' %} 
+                      <div class="blog-item">
+                        <article class="blog__article">
+                          {% if article.image %}
+                            <a href="{{ article.url }}">
+                              <img src="{{ article.image.src | img_url: '500x' |  }}" alt="{{ article.image.alt }}"/>
+                            </a>
+                          {% endif %}
+                          <div class="blog__article-content">
+                            <div>
+                              <h3 class="blog__article-heading type-heading-2">
+                                <a href="{{ article.url }}">{{ article.title }}</a>
+                              </h3>
+
+
+                              {% if article.excerpt.size > 0 %}
+                              <div class="blog__article-excerpt type-body-small">{{ excerptDescription | first | truncate: 200 }}</div>
+                              {% else %}
+                              <div class="blog__article-excerpt type-body-small">{{ article.content | strip_html | truncate: 150 }}</div>
+                              {% endif %}
+                              {% if article.metafields.blog.author %}
+                              <span class="author-name"> 
+                                <i>By</i> {{ article.metafields.blog.author }}
+                              </span>
+                              {% endif %}
+                              <span class="read-time">
+                                  {{ article.metafields.blog.readtime }}
+                              </span>
+
+                            </div>
+
+                            {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+                            <div class="type-heading-meta meta">{{ date }}</div>
+                          </div>
+                        </article>
+                      </div>
+                {% endfor %}
+            </div>
+          </div>
+       </div>  
+    {% endif %}
+    {% if current_tags != blank %}
+    <div class="blog-list-section inner-tag-list">
+          <div class="inner-container">
+            {%comment %}
+              <h2 class="section-title text-center">
+                {% if current_tags != blank %}{{ current_tags }}{% endif %} More Stories 
+              </h2>
+            {% endcomment %}
+            <div class="blog-grid-list blog_grid">
+                <div class="blog-sizer"></div>
+                {% for article in blog.articles %}
+                      {% assign excerptDescription = article.excerpt | split:'<!-- split -->' %} 
+                      <div class="blog-item">
+                        <article class="blog__article">
+                          {% if article.image %}
+                            <a href="{{ article.url }}">
+                              <img src="{{ article.image.src | img_url: '500x' |  }}" alt="{{ article.image.alt }}"/>
+                            </a>
+                          {% endif %}
+                          <div class="blog__article-content">
+                            <div>
+                              <h3 class="blog__article-heading type-heading-2">
+                                <a href="{{ article.url }}">{{ article.title }}</a>
+                              </h3>
+
+
+                              {% if article.excerpt.size > 0 %}
+                              <div class="blog__article-excerpt type-body-small">{{ excerptDescription | first | truncate: 200 }}</div>
+                              {% else %}
+                              <div class="blog__article-excerpt type-body-small">{{ article.content | strip_html | truncate: 150 }}</div>
+                              {% endif %}
+                              {% if article.metafields.blog.author %}
+                                <span class="author-name"> 
+                                  <i>By</i> {{ article.metafields.blog.author }}
+                                </span>
+                              {% endif %}
+                              <span class="read-time">
+                                  {{ article.metafields.blog.readtime }}
+                              </span>
+
+                            </div>
+
+                            {% capture date %}{{ article.published_at | time_tag: format: 'month_day_year' }}{% endcapture %}
+                            <div class="type-heading-meta meta">{{ date }}</div>
+                          </div>
+                        </article>
+                      </div>
+                {% endfor %}
+            </div>
+          </div>
+       </div>
+    {% endif %}
+    
+  </section>
+  {% if paginate.pages > 1 %} 
+  <div class="blog__container">
+      <div class="blog__pagination">
+        {% if paginate.pages > 1 %}
+          {% include 'pagination' with type: 'general.pagination.blog_posts' %}
+        {% else %}
+          {% include 'pagination' with type: 'general.pagination.blog_posts', display_paginate_item_count_only: true %}
+        {% endif %}
+      </div>
+  </div>
+  {% endif %}
+
+</div>
+{% endpaginate %}
+{% comment %}
+{% section 'static-recently-viewed' %}
+{% endcomment %}

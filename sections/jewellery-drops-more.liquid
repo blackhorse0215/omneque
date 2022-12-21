@@ -1,0 +1,28 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="drops-more"
+  class="jewellery-drops-more"
+>
+  <section class="section">
+    <div class="section-inner">
+      {% if section.settings.title != blank %}
+      <div class="title-line"></div>
+      <h1 class="section-title">{{ section.settings.title | escape }}</h1>
+      <div class="title-line"></div>
+      {% endif %}
+    </div>
+  </section>
+</section>
+
+{% schema %}
+  {
+    "name": "More Drops",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Section Text"
+      }
+    ]
+  }
+{% endschema %}

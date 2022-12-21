@@ -1,0 +1,41 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="dynamic-text-columns-with-images"
+  class="section"
+>
+  <div class="text-columns__content home_usp usp_content">
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'USP-Icons-01.png' | asset_url }}"/>
+      </div>
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'USP-Icons-02.png' | asset_url }}"/>
+      </div>
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'USP-Icons-03.png' | asset_url }}"/>
+      </div>
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'USP-Icons-04.png' | asset_url }}"/>
+      </div>
+    {% comment %}
+    {% for block in section.blocks %}
+    <div class="text-columns__feature text-columns__feature--{{ section.blocks.size }}">
+      <div class="usp-box">
+        {%- if block.settings.image != blank -%}
+        <div class="usp-icon">
+          <div style="max-width:30px">
+            {% render 'responsive-image' with image: block.settings.image, max_width: 600 %}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if block.settings.title != blank -%}
+        <h4 class="type-heading-4">{{ block.settings.title }}</h4>
+        {%- endif -%}
+        {%- if block.settings.subheading != blank -%}
+        <p class="type-body-regular mb0">{{ block.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+    {% endfor %}
+    {% endcomment %}
+  </div>
+</section>

@@ -1,0 +1,99 @@
+<div class="sizing-page">
+  	<div class="sizing-intro-top">
+        <div class="buyer-heading">
+          <h2 class="section-title type-heading-1">{{ section.settings.sizing_top_title }}</h2>
+          <p>{{ section.settings.sizing_text }}
+          </p>
+        </div>
+  	</div> 
+    {% if section.settings.size_banner != blank %}
+      <div class="sizing-banner"><img src="{{ section.settings.size_banner | img_url:'1900x' }}"/>
+      </div>
+    {% endif%}
+  	
+  	<div class="measure_ring_section">
+        <div class="measure_wrapper">
+          
+          <div class="measure_img">
+            {% if section.settings.measure_img != blank %}
+          		<img src="{{ section.settings.measure_img | img_url:'600x' }}"/>
+            {% endif %}
+          </div>
+          <div class="measure_info">
+             <h4>{{ section.settings.measure_title}}</h4>
+             {{ section.settings.measure_text}}
+             <div class="mi-list">
+             {% for block in section.blocks %}
+               <div class="mi-item">
+               	  <span class="mi-count">
+                      {%if forloop.index < 10 %}
+                            {{ forloop.index }}.
+                      {% else %}	
+                          {{ forloop.index }}
+                      {% endif %}	
+                 </span> 
+                 <p>
+                 	{{  block.settings.sizing_list }}
+                 </p>
+               </div>
+             {% endfor %}
+            </div>
+          </div>
+        </div>
+  	</div>
+</div>
+{% schema %}
+  {
+    "name": "Page Sizing",
+    "settings": [
+		{
+          "type":"text",
+          "id":"sizing_top_title",
+          "label":"Sizing top title"
+		},
+        {
+          "type":"richtext",
+          "id":"sizing_text",
+          "label":"Sizing text"
+		},
+		{
+          "type":"image_picker",
+          "id":"size_banner",
+          "label":"Sizing banner"
+		},
+        {
+          "type":"header",
+          "content": "Measure info"
+		},
+        {
+          "type":"image_picker",
+          "id":"measure_img",
+          "label":"Measure image"
+		},
+        {
+          "type":"text",
+          "id":"measure_title",
+          "label":"Measure title"
+		},
+        {
+          "type":"richtext",
+          "id":"measure_text",
+          "label":"Measure text"
+		}
+		
+	],
+    "blocks":[
+	  {
+		"name":"Measure info list",
+		"type":"text",
+		"settings": [
+			{
+              "type":"richtext",
+              "id":"sizing_list",
+              "label":"Measure item"
+            }
+         ]
+	  }
+	]
+  }
+{% endschema %}

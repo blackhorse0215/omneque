@@ -1,0 +1,102 @@
+{% assign has_images = false %}
+{% for block in blocks %}
+  {% if block.settings.icon != blank %}
+    {% assign has_images = true %}
+  {% endif %}
+{% endfor %}
+
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="{{ type }}"
+  class="
+    testimonials section
+    {% if has_images %}testimonials--has-images{% endif %}
+    {% if blocks.size < 2 %}testimonials--single{% endif %}
+  "
+>
+  <div class="{% render 'section-style' with outlined: section.settings.outline %}">
+    
+    <div class="js-fq testimonials__container">
+      {% for block in blocks %}
+        <div
+          class="testimonials__slide ph3 tc"
+          {% if forloop.index == 4 %}
+            {% if block.settings.icon != blank %}
+              data-image="{{ block.settings.icon | img_url: '180x' }}"
+            {% endif %}
+          {% else %}
+            {% if block.settings.icon != blank %}
+              data-image="{{ block.settings.icon | img_url: '90x' }}"
+            {% endif %}
+          {% endif %}
+          data-index="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="type-heading-1 mw8 center mt3">{{ block.settings.quote }}</div>
+          {% if block.settings.author != blank %}
+            <p class="type-body-regular">{{ block.settings.author }}</p>
+          {% endif %}
+
+          {% if block.settings.icon != blank %}
+            <img
+              class="testimonials__icon active"
+              {% if forloop.index == 4 %}
+                {% if block.settings.icon != blank %}
+                  src="{{ block.settings.icon | img_url: '180x' }}"
+                {% endif %}
+              {% else %}
+                {% if block.settings.icon != blank %}
+                  src="{{ block.settings.icon | img_url: '90x' }}"
+                {% endif %}
+              {% endif %}
+              
+              alt="{{ block.settings.icon.alt }}"
+            />
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="testimonials__pagination">
+      {% for block in blocks %}
+        {% if block.settings.icon != blank %}
+          <img
+            data-pagination
+            data-index="{{ forloop.index0 }}"
+            class="testimonials__icon {% if forloop.index0 == 0 %}active{% endif %}"
+            {% if forloop.index == 4 %}
+              {% if block.settings.icon != blank %}
+                src="{{ block.settings.icon | img_url: '180x' }}"
+              {% endif %}
+            {% else %}
+              {% if block.settings.icon != blank %}
+                src="{{ block.settings.icon | img_url: '90x' }}"
+              {% endif %}
+            {% endif %}
+            alt="{{ block.settings.icon.alt }}"
+          />
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }} .testimonials__icon {
+    /* width: 100%;
+    max-width: {{ icon_width }}px; */
+    margin-left: calc({{ icon_width }}px / 5);
+    margin-right: calc({{ icon_width }}px / 5);
+  }
+  /* #shopify-section-{{ section.id }} .testimonials__icon:nth-child(3){
+    max-width:calc({{ icon_width }}px * 2.2);
+  }
+  #shopify-section-{{ section.id }} .testimonials__icon:nth-child(4){
+    max-width:calc({{ icon_width }}px * 2 / 3);
+  }
+  #shopify-section-{{ section.id }} .testimonials__icon:nth-child(5){
+    max-width:calc({{ icon_width }}px * 20 / 9); */
+  }
+</style>
+
+{% assign has_images = false %}

@@ -1,0 +1,150 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="dynamic-text-columns-with-images"
+  class="section usp__section"
+>
+  <div class="text-columns ">
+
+    <div class="text-columns__heading">
+      <div class="usp_bar_logo">
+        <h2>Omneque</h2>
+        <span>/om-neek/</span>
+      </div>
+      <div class="usp_logo_pronouncation">
+        <p>[derived from Latin 'omneque']</p>
+        <span>(Noun) Precious thing; valuable</span>
+      </div>
+    </div>
+
+    <div class="text-columns__content home_usp usp_content">
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'usp1.svg' | asset_url }}"/>
+        <p>bold <br>curation</p>
+      </div>
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'usp2.svg' | asset_url }}"/>
+        <p>Expert<br> Authentication</p>
+      </div>
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'usp3.svg' | asset_url }}"/>
+        <p>Free<br>Delivery</p>
+      </div>
+      <div class="text-columns__feature text-columns__feature--4">
+        <img src="{{ 'usp4.svg' | asset_url }}"/>
+        <p>No Quibble<br>Returns</p>
+      </div>
+      {% comment %}
+        {% for block in section.blocks %}
+          <div class="text-columns__feature text-columns__feature--{{ section.blocks.size }}">
+            <div class="usp-box">
+              {%- if block.settings.image != blank -%}
+                <div class="usp-icon">
+                  <div style="max-width:30px">
+                    {% render 'responsive-image' with image: block.settings.image, max_width: 600 %}
+                  </div>
+                </div>
+              {%- endif -%}
+              {%- if block.settings.title != blank -%}
+                <h4 class="type-heading-4">{{ block.settings.title }}</h4>
+              {%- endif -%}
+              {%- if block.settings.subheading != blank -%}
+                <p class="type-body-regular mb0">{{ block.settings.subheading }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+        {% endfor %}
+      {% endcomment %}
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "USP bar",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "header",
+        "content": "Section style"
+      },
+      {
+        "type": "checkbox",
+        "id": "outline",
+        "label": "Outline section",
+        "default": false
+      }
+    ],
+    "max_blocks": 3,
+    "blocks": [
+      {
+        "type": "column",
+        "name": "Column",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "range",
+            "id": "image_max_width",
+            "label": "Max image width",
+            "min": 10,
+            "max": 100,
+            "step": 10,
+            "unit": "%",
+            "default": 100
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Heading"
+          },
+          {
+            "type": "textarea",
+            "id": "subheading",
+            "label": "Subheading"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "USP bar",
+        "category": "Text",
+        "settings": {
+          "title": "USP bar",
+          "outline": false
+        },
+        "blocks": [
+          {
+            "type": "column",
+            "settings": {
+              "title": "Column One",
+              "subheading": "Start here. Introduce your vision, or explain why what you do or sell is superior to your competitors."
+            }
+          },
+          {
+            "type": "column",
+            "settings": {
+              "title": "Column Two",
+              "subheading": "Get into your process a bit. The quality of handiwork, proprietary knowledge, or materials that you use that make your products better. "
+            }
+          },
+          {
+            "type": "column",
+            "settings": {
+              "title": "Column Three",
+              "subheading": "End it with an action item that the user can take advantage of. Link to a more in-depth page, or go straight to a collection. Your call."
+            }
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

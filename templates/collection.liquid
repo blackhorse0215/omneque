@@ -1,0 +1,8 @@
+{% section 'static-header-collection'  %}
+
+{% comment %}{% section 'static-header-collection'  %}{% endcomment %}
+{% section 'collection-template-boost-pfs-filter' %}
+{% comment %}{% section 'dynamic-collection-list' %}
+{% unless collection.handle contains 'drop'%}
+  {% section 'dynamic-collection-list' %} 
+{% endunless %}{% endcomment %}

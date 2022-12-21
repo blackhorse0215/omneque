@@ -1,0 +1,107 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="dynamic-blog-posts"
+  class="section blog-posts"
+>
+	<div class = "stories_wrapper">
+    <div class = "stories_header">
+      {% if section.settings.title != blank %}
+        <h4 class = "stories_heading_text">{{ section.settings.title }}</h4>
+      {% endif %}
+      <a class = "link_all_stories" href = "https://www.omneque.com/blogs/news">view all stories</a>
+    </div>
+    <div class = "stories_contents">
+      {% for block in section.blocks %}
+        {% assign article = articles[block.settings.article] %}
+        <div class="stories_content_column">
+          <div class = "stories_image_wrapper">
+            {% if block.settings.hp_article_img %}
+            <a href = "{{ article.url }}"><img src="{{ block.settings.hp_article_img | img_url: '500x1000'}}" style="{% if forloop.index==3 %} object-position:85% 20%;{% endif %}"></a>
+            {% else %}
+            <a href = "{{ article.url }}"><img src="{{ article.image.src | img_url: '500x1000'}}"></a>
+            {% endif %}
+          </div>
+          <h3 class="type-heading-1"><a href="{{ article.url }}">{{ article.title }}</a></h3>
+          {% if article.metafields.blog.author  %}
+              <span class="ba-name"> 
+                <i>By</i> {{ article.metafields.blog.author }}
+              </span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+  
+</section>
+
+<style>
+
+.slick-prev:before, .slick-next:before {
+    color: black;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.slick-prev {
+    top: -10px;
+    left: unset;
+    right: 45px;
+}
+
+.slick-next {
+    right: 15px;
+    top: -10px;
+}
+
+</style>
+
+{% schema %}
+  {
+    "name": "Blog post list",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Blog posts"
+      },
+      {
+        "type": "header",
+        "content": "Section style"
+      },
+      {
+        "type": "checkbox",
+        "id": "outline",
+        "label": "Outline section",
+        "default": false
+      }
+    ],
+     "blocks":[
+		{
+          "type":"text",
+          "name":"Article",
+          "settings":[
+              {
+                  "type": "article",
+                  "id": "article",
+                  "label": "Article item"
+              },
+              {
+                "type": "image_picker",
+                "id": "hp_article_img",
+                "label": "Article Image"
+              }
+          ]
+		}
+	],
+    "presets": [
+      {
+        "name": "Blog posts",
+        "category": "Blog",
+        "settings": {
+         
+        }
+      }
+    ]
+  }
+{% endschema %}

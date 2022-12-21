@@ -1,0 +1,79 @@
+<section class="blog-new-page">
+    <div class="inner-container">
+        <div class="blog-latest-header-mobile">
+            <p>THE JOURNAL</p>
+            <h1>{{ section.settings.title }}</h1>
+        </div>
+        <div class="featured-collection-list-wrapper">
+            {% for block in section.blocks %}
+                {% assign article = articles[block.settings.article] %}
+                <div class="latest_blogs">
+                    {% if forloop.index == 1 %}
+                        <p>THE JOURNAL</p>
+                        <h1>{{ section.settings.title }}</h1>
+                    {% endif %}
+                    <div class = "stories_image_wrapper">
+                        {% if block.settings.hp_article_img %}
+                            <a href = "{{ article.url }}"><img src="{{ block.settings.hp_article_img | img_url: '600x600'}}"></a>
+                        {% else %}
+                            <a href = "{{ article.url }}"><img src="{{ article.image.src | img_url: '500x500'}}"></a>
+                        {% endif %}
+                    </div>
+                    <p>LATEST</p>
+                    <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+                    {% if article.metafields.blog.author  %}
+                        <span class="author_name"> 
+                            By {{ article.metafields.blog.author }}
+                        </span>
+                    {% elsif article.metafields.global.author %}
+                        <span class="author_name"> 
+                            By {{ article.metafields.global.author }}
+                        </span>
+                    {% endif %}
+                    {% if article.metafields.blog.readtime  %}
+                        <span class="read-time">
+                            {{ article.metafields.blog.readtime }}
+                        </span>
+                    {% elsif article.metafields.global.readtime %}
+                        <span class="read-time">
+                            {{ article.metafields.global.readtime }}
+                        </span> 
+                    {% endif %}
+                    
+                </div>
+            {% endfor %}            
+        </div>
+    </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Blog Posts",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "An Exclusive Selection of Latest News"
+      }
+    ],
+     "blocks":[
+		{
+          "type":"text",
+          "name":"Article",
+          "settings":[
+              {
+                  "type": "article",
+                  "id": "article",
+                  "label": "Article item"
+              },
+              {
+                "type": "image_picker",
+                "id": "hp_article_img",
+                "label": "Article Image"
+              }
+          ]
+		}
+	]
+  }
+{% endschema %}

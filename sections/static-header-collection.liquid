@@ -1,0 +1,86 @@
+{% if template contains 'designers' %}
+  {% if collection.description != blank %}
+  <div class="collection-detail-cms designer-collection">
+    <h2 class="section-title">{{ collection.title }}</h2> 
+    {% if collection.metafields["global"]["designer-link"] !=blank %}
+    <div class="designer-link">
+      <a href="https://www.{{ collection.metafields["global"]["designer-link"] }}" target="_blank">
+        {{ collection.metafields["global"]["designer-link"] }}	
+      </a>
+    </div>
+    {% endif %}
+    <div class="collection-description">
+      {% comment %} {{ collection.description }} {% endcomment %}
+      {% if collection.description.size > 100 %}
+        <div id="truncated">{{ collection.description | truncatewords: 80, "... <span class='read-more-collection read-more' style='font-size: 16px; color: #FF977E;'>Read More</span>" }}</div>
+        <div id="fullDescription" style="display: none">{{ collection.description}}</div>
+      {% else %}
+        {{ collection.description }}
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+{% else %}
+  <header role="banner" class="section">
+    <div class="section--standard flex flex-wrap">
+      <div class="collection__details {% if section.settings.show_collection_image and collection.image == blank %}collection__details--no-image{% endif %}">
+        <p class="type-heading-meta meta mt0 mb3">
+          {{ 'collections.general.name' | t }}
+        </p>
+        <h1 class="type-heading-1 mv3 ma0">{{ collection.title }}</h1>
+        {% if collection.description != blank %}
+        <div class="type-body-regular rte measure">
+          {{ collection.description }}
+        </div>
+        {% endif %}
+      </div>
+
+      {% if section.settings.show_collection_image and collection.image != blank %}
+      <div
+           class="lazyload collection__image"
+           data-bgset="{% render 'responsive-bg-image', image: collection.image %}"
+           role="img"
+           aria-label="{{ collection.image.alt }}"
+           ></div>
+      {% endif %}
+    </div>
+  </header>
+{% endif %}
+
+<style>
+  .read-more-collection {
+    text-decoration: underline;
+  }
+  .read-more-collection:hover {
+    cursor:pointer;
+    color: var(--color-accent);
+  }
+</style>
+
+<script>
+  $(document).ready(function() {
+    $('#fullDescription p').last().append("<span class='read-more-collection read-less'  style='font-size: 16px; padding-left: 20px; color: #FF977E;'>Read Less</span>");
+  });
+  $(document).on('click', '.read-more-collection.read-more', function() {
+    $('#truncated').children().hide();
+    $('#fullDescription').show();
+  });
+  $(document).on('click', '.read-more-collection.read-less', function() {
+    $('#truncated').children().show();
+    $('#fullDescription').hide();
+  });
+</script>
+
+{% schema %}
+  {
+    "name": "Collection header",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_collection_image",
+        "label": "Show collection image",
+        "default": true
+      }
+    ]	
+  }
+{% endschema %}

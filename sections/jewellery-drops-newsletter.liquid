@@ -1,0 +1,76 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="drops-newsletter"
+  class="jewellery-drops-newsletter"
+>
+  <section class="section">
+    <div class="section-inner">
+      {% if section.settings.title != blank %}
+      <h1 class="section-title">{{ section.settings.title | escape }}</h1>
+      {% endif %}
+      <p class="subheading">
+        {{ section.settings.sub_title }}
+      </p>
+      <div class="footer__input-wrap">
+        {% form 'customer' %}
+          {{ form.errors | default_errors }}
+          {% if form.posted_successfully? %}
+            <p>{{ 'general.newsletter_form.confirmation' | t }}</p>
+          {% else %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="newsletter__input-container">
+              <input type="email"
+                class="input-reset input email"
+                name="contact[email]"
+                id="Email"
+                value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
+                placeholder="Email address"
+                autocorrect="off"
+                autocapitalize="off">
+            </div>
+          {% endif %}
+        {% endform %}
+      </div>
+      <p class="footertext">
+        {{ section.settings.footer_text }}
+      </p>
+    </div>
+  </section>
+</section>
+
+<style>
+  .jewellery-drops-newsletter {
+    background-image: url('{{ "pattern.png" | asset_img_url: "master" }}');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+  }
+  @media (max-width: 1260px) {
+    .jewellery-drops-newsletter {
+      background-size: cover;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Drops Newsletter",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "sub_title",
+        "label": "Sub Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "footer_text",
+        "label": "Text"
+      }
+    ]
+  }
+{% endschema %}

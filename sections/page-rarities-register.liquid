@@ -1,0 +1,150 @@
+<div class="register_form_wrapper">
+    {% comment %}{formbuilder:20207}
+      <h1 class="account__auth-wrapper-heading type-heading-display">{{ 'customer.register.title' | t }}</h1>
+    {% endcomment %}
+    
+    <div class="register-form-section">
+      <div class="register-wrapper">
+        <div class="register-left">
+            <img class="register-img" src="{{ section.settings.register_img | img_url: '950x'}}">
+           {% comment %} <span class="register-note">*You will receive a code to redeem for £20 off your first order once you register your account.</span> {% endcomment %}
+        </div>
+        <div class="register-right">
+            <div class="register-form-box">
+              {% render "customer-fields", form_id: "qOtmGe" %}
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  
+  </div>
+  
+  <style>
+    .header:not(.header--transparent){
+          background-color: #101010;
+      }
+      .header-container.is-sticky .header{
+          background-color: #101010;
+      }
+      .header__logo-text{
+          color: #ffffff;
+      }
+      .header__nav .nav__link{
+          color: #ffffff;
+      }
+      .header__icon-wrapper{
+          color: #ffffff;
+      }
+      .quick-cart__indicator{
+          color: #000000;
+          background-color: #ffffff;
+      }
+      #mobile-nav{
+          color: #ffffff;
+      }
+      .register_form_wrapper{
+        background-color: #101010;
+        color: #ffffff;
+      }
+      .register-form-section{
+        padding-top:0;
+      }
+      .register-wrapper{
+        margin: 0;
+        padding-left: 50%;
+        height:1000px;
+      }
+      .register-left{
+        width: 50%;
+      }
+      .register-left .register-img{
+        height: 1000px;
+        object-fit: cover;
+        object-position: center;
+      }
+      .register-form-section .cf-form-inner .cf-form-actions .btn{
+        position: relative;
+        left:0;
+        bottom:0;
+        transform: unset;
+        background-color: #00453f;
+        max-width: unset;
+        height: 45px;
+      }
+      .register-right{
+        padding:30px 50px;
+      }
+      .cf-field input, .cf-field select{
+        background-color: #1a1a1a;
+        color: #ffffff;
+        border-color: #626262;
+      }
+      ::placeholder {
+        color: #ffffff !important;
+        opacity: 1; /* Firefox */
+      }
+  
+      :-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color: #ffffff !important;
+      }
+  
+      ::-ms-input-placeholder { /* Microsoft Edge */
+      color: #ffffff !important;
+      }
+      .cf-field p{
+        color: #626262;
+      }
+      .cf-field>label{
+          padding-bottom: 10px;
+          color: #626262;
+      }
+      .cf-form-actions .cf-step-invalid .cf-form-errors{
+        background-color: unset;
+      }
+      .cf-enum-field__choice input[type=checkbox]+span:after{
+        border-right-color: #ffffff;
+        border-top-color: #ffffff;
+      }
+      .cf-enum-field__choice input[type=checkbox]+span:before{
+        border-color: #ffffff;
+      }
+      option{
+        background-color: #1a1a1a;
+        color: #ffffff;
+      }
+      @media screen and (max-width: 767px){
+        .register-wrapper{
+          height: unset;
+          padding-left: 0;
+          padding-top: 0;
+        }
+        .register-left{
+          width: 100%;
+        }
+        .register-left .register-img{
+          height: 380px;
+        }
+      }
+      @media screen and (max-width: 520px){
+        .register-wrapper{
+          padding-top: 0;
+        }
+        .register-left .register-img{
+          height: 380px;
+        }
+      }
+  </style>
+
+{% schema %}
+{
+  "name": "Rarities-Register",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "register_img",
+      "label": "Register Image"
+    }
+    ]
+}
+{% endschema %}

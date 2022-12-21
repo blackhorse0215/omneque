@@ -1,0 +1,195 @@
+
+<section class="concierge-form">
+  <div class="concierge-form-container">
+    <div class="concierge-form-header">
+      <h1 class="concierge-form-title">{{ page.title }}</h1>
+      <div class="concierge-form-descr">
+        {{ page.content }}
+      </div>
+    </div>
+  </div>
+  
+  <div class="concierge-form-content">
+    <div class="concierge-form-container">
+      {% form 'contact', id: 'concierge_form' %}
+        <label for="" class="">*Required fields</label>
+        <div class="customer-info">
+          <div class="custominput-wrapper">
+            {% if customer %}
+              <input type="text" class="custom-input" readOnly="readOnly" name="" placeholder="First Name*" value="{{ customer.first_name }}">
+            {% else %}
+              <input type="text" class="custom-input" name="customer[firstname]" placeholder="First Name*">
+            {% endif %}
+          </div>
+          <div class="custominput-wrapper">
+            {% if customer %}
+              <input type="text" class="custom-input" readOnly="readOnly" name="" placeholder="Last Name*" value="{{ customer.last_name }}">
+            {% else %}
+              <input type="text" class="custom-input" name="customer[lastname]" placeholder="Last Name*">
+            {% endif %}
+          </div>
+          <div class="custominput-wrapper">
+            {% if customer %}
+              <input type="email" class="custom-input" readOnly="readOnly" name="" placeholder="Email*" value="{{ customer.email }}">
+            {% else %}
+              <input type="email" class="custom-input" name="customer[email]" placeholder="Email*">
+            {% endif %}
+          </div>
+          <div class="custominput-wrapper">
+            <input type="text" class="custom-input" name="customer[mobile]" placeholder="Mobile">
+          </div>
+        </div>
+
+        <div class="custom-options">
+          <div class="left-options">
+            <label for="" class="options-label">What service(s) are you interested in?</label>
+            <div class="custom-checkbox">
+              <label id="personal_shopping">
+                <input type="checkbox" name="">
+                <span>Personal Shopping</span>
+              </label>
+            </div>
+            <div class="custom-checkbox">
+              <label id="remodelling_jewellery">
+                <input type="checkbox" name="">
+                <span>Remodelling Jewellery</span>
+              </label>
+            </div>
+            <div class="custom-checkbox">
+              <label id="rare_pieces">
+                <input type="checkbox" name="">
+                <span>Rare Pieces</span>
+              </label>
+            </div>
+            <div class="custom-checkbox">
+              <label id="bidding_auction">
+                <input type="checkbox" name="">
+                <span>Bidding at Auction</span>
+              </label>
+            </div>
+            <div class="custom-checkbox">
+              <label id="bespoke_commission">
+                <input type="checkbox" name="">
+                <span>Bespoke commission</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="right-options"></div>
+        </div>
+
+        <div class="custom-textareas"></div>
+
+        <!-- <div class="custom-photo">
+          <button type="button" class="upload-photo button">
+            <input type="file" name="">
+            <span>Upload Photo</span>
+          </button>
+          <label for="">Optional: upload a photo of the piece you have in mind</label>
+        </div> -->
+
+        <div class="custom-options">
+          <div>
+            <div class="custom-checkbox">
+              <label>
+                <input type="checkbox" name="newsletter">
+                <span>Would you like to receive jewellery advice, news, and advance access to our drops?</span>
+              </label>
+            </div>
+            <div class="custom-checkbox">
+              <label>
+                <input type="checkbox" name="" class="agree-term-condition">
+                <span>By registering, I agree to the Omneque Account Terms and Conditions</span>
+                <p class="term-condition-error hide">Please accept Terms and Conditions</p>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="custom-button">
+          <button type="button" class="custom-submit button">
+            <span>Submit</span>
+          </button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+
+  <div class="concierge-form-container">
+    <div class="concierge-form-footer">
+      <div class="contact-info">
+        <div class="info-header">
+
+          <h3>Call Us</h3>
+        </div>
+        <div class="contact-content">
+          For assistance with your order or general information by phone.
+          <br />
+          <br />
+          Mon-Sat 9am-6pm
+        </div>
+        <div class="contact-link">
+          <a href="tel:+4479 70251751">Tel. 4479 70251751</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="info-header">
+          
+          <h3>Email Us</h3>
+        </div>
+        <div class="contact-content">
+          Send us an email at hello@omneque.com and a team member will reply to you within one day.
+        </div>
+        <div class="contact-link">
+          <a href="mailto:hello@omneque.com">Send us an email</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="info-header">
+          
+          <h3>Message Us</h3>
+        </div>
+        <div class="contact-content">
+          Contact us on Facebook messenger and an Omneque team member will get back to you within one day.
+        </div>
+        <div class="contact-link">
+          <a href="">Send us a message</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="info-header">
+          
+          <h3>Contact Our Concierge</h3>
+        </div>
+        <div class="contact-content">
+          For specialist advice including personal shopping or to take advantage of any of our exclusive services, contact our dedicated Concierge at concierge@omneque.com.
+        </div>
+        <div class="contact-link">
+          <a href="mailto:hello@omneque.com">hello@omneque.com</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="info-header">
+          
+          <h3>Faq</h3>
+        </div>
+        <div class="contact-content">
+          For questions about how to place an order, information on our shipping & returns policy and more, visit our Frequently Asked Questions page.
+        </div>
+        <div class="contact-link">
+          <a href="faq">Explore FAQ</a>
+        </div>
+      </div>
+      <div class="contact-info">
+        <div class="info-header">
+          
+          <h3></h3>
+        </div>
+        <div class="contact-content">
+        </div>
+        <div class="contact-link">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

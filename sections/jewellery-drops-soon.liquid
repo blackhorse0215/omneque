@@ -1,0 +1,102 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="drops-soon"
+  class="jewellery-drops-soon"
+>
+  <section class="section">
+    <div class="section-inner">
+      {% if section.settings.title != blank %}
+      <h1 class="section-title">{{ section.settings.title | escape }}</h1>
+      {% endif %}
+      <p class="subheading">
+        {{ section.settings.sub_title }}
+      </p>
+      {% if section.blocks.size > 0 %}
+      <div class="drop-list">
+        <ul>
+          {% for block in section.blocks %}
+          <li class="drop-item block-{{ block.id }}">
+            <div class="item-header">
+              <h2 class="item-title">{{ block.settings.title }}</h2>
+              
+              {% comment %}<h1 class="item-index">{{ forloop.index }}</h1>{% endcomment %}
+              <style>
+                .jewellery-drops-soon .block-{{ block.id }} .item-header {
+                  background-image: url('{{ block.settings.image | img_url: "master" }}');
+                  background-repeat: no-repeat;
+                  background-size: cover;
+/*                   background-position: -135px; */
+                }
+              </style>
+            </div>
+            
+            <div class="item-content">
+              <h3 class="item-subtitle">{{ block.settings.sub_title }}</h3>
+              <div class="item-time">
+                {{ block.settings.revealed_date }}
+              </div>
+              
+              <div class="item-description">
+                {{ block.settings.description }}
+              </div>
+              {% comment %}<a class="item-button">ADD TO CALENDAR<img class="" src="{{ 'calendar-icon.png' | asset_img_url: 'master' }}" /></a>{% endcomment %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</section>
+
+{% schema %}
+  {
+    "name": "Dropping Soon",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading"
+      },
+      {
+        "type": "textarea",
+        "id": "sub_title",
+        "label": "Sub Heading"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "drop",
+        "name": "Drop",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+          },
+          {
+            "type": "text",
+            "label": "Title",
+            "id": "title"
+          },
+          {
+            "type": "text",
+            "label": "Sub Title",
+            "id": "sub_title"
+          },
+          {
+            "type": "text",
+            "label": "Revealed Date",
+            "id": "revealed_date"
+          },
+          {
+            "type": "textarea",
+            "label": "Description",
+            "id": "description"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

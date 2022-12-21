@@ -1,0 +1,207 @@
+{% assign lightBanner = article.metafields.blog.light-image  %}
+{% assign light_Banner = article.metafields.global.light-image  %}
+{% assign excerptDescription = article.excerpt | split:'<!-- split -->' %}
+<section data-component="page" class="blog-detail-head {% if lightBanner == 'light-image' %} light-image {% endif %}">
+    {% if article.image %}
+      {% assign s = section.settings %}
+  	   {% if lightBanner == 'light-image' or light_Banner == 'light-image' %}
+  			<div class="light-image blog-header">	
+  			<div class="inner-container">	
+  			<div class="article__heading-content">
+                <header role="banner" class="article__heading__text ph3 tc self-center centered-content">
+                  <span class="blog-title">{{ blog.title }}</span>
+                  <h1 class="type-heading-display measure-narrow center">{{ article.title }}</h1>
+                  {%- if article.excerpt != blank -%}
+                    <div class="type-body-large measure center">{{ excerptDescription | first }}</div>
+                  {%- endif -%}
+                  {% if article.metafields.blog.author %}
+                    <span class="author-name"> 
+                      <i>By</i> {{ article.metafields.blog.author }}
+                    </span>
+                  {% elsif article.metafields.global.author %}
+                    <span class="author-name"> 
+                      <i>By</i> {{ article.metafields.global.author }}
+                    </span>
+                  {% endif %}
+                  
+                  {% if article.metafields.blog.readtime %}
+                    <span class="read-time">
+                      {{ article.metafields.blog.readtime }}
+                    </span>
+                  {% elsif article.metafields.global.readtime %}
+                    <span class="read-time">
+                      {{ article.metafields.global.readtime }}
+                    </span>
+                  {% endif %}
+                  
+                  {% if article.metafields.blog.headerlink_copy and article.metafields.blog.headerlink_url %}
+                    <span class="blog_header_link"><a href="{{ article.metafields.blog.headerlink_url }}">{{ article.metafields.blog.headerlink_copy }}</a></span>
+                  {% endif %}
+                </header>
+              </div>
+              {% if article.image %}
+                {% if article.title contains 'London in the House' %}
+                  <div class="blog-light-banner">
+                    <img src="{{ article | img_url: '1440x' }}" alt="img"/>                 
+                  </div>
+                {% else %}
+                  <div class="blog-light-banner">
+                    <img src="{{ article | img_url: '1000x' }}" alt="img"/>                 
+                  </div>
+                {% endif %}
+                
+              {% endif %}
+          </div>
+        </div>
+       {% else %}
+  			<div
+              class="article__heading-wrapper lazyload cover bg-container bg-center relative"
+              data-bgset="{% render 'responsive-bg-image', image: article.image %}"
+              role="img"
+              aria-label="{{ article.image.alt }}"
+            >
+
+              <div class="article__heading-content" {% if s.text_color != blank %}style="color: {{ s.text_color }};"{% endif %}>
+                <header role="banner" class="article__heading__text ph3 self-center">
+                  <span class="blog-title">{{ blog.title }}</span> 
+                  <h1 class="type-heading-display measure-narrow center">{{ article.title }}</h1>
+
+                  {%- if article.excerpt != blank -%}
+                    <div class="type-body-large measure center">{{ excerptDescription | first }}</div>
+                  {%- endif -%}
+                  {% if article.metafields.blog.author %}
+                    <span class="author-name"> 
+                      <i>By</i> {{ article.metafields.blog.author }}
+                    </span>
+                  {% elsif article.metafields.global.author %}
+                    <span class="author-name"> 
+                      <i>By</i> {{ article.metafields.global.author }}
+                    </span>
+                  {% endif %}
+                  {% if article.metafields.blog.readtime %}
+                    <span class="read-time">
+                      {{ article.metafields.blog.readtime }}
+                    </span>
+                  {% elsif article.metafields.global.readtime %}
+                    <span class="read-time">
+                      {{ article.metafields.global.readtime }}
+                    </span>
+                  {% endif %}
+                  
+                  {% if article.metafields.blog.headerlink_copy and article.metafields.blog.headerlink_url %}
+                    <span class="blog_header_link"><a href="{{ article.metafields.blog.headerlink_url }}">{{ article.metafields.blog.headerlink_copy }}</a></span>
+                  {% endif %}
+                </header>
+              </div>
+
+              {% if s.overlay_color != blank %}
+                <div class="z-1 absolute absolute--fill o-{{ s.overlay_opacity }}" style="background: {{ s.overlay_color }};"></div>
+              {% endif %}
+            </div>
+
+            <noscript>
+              {%- assign image_size = article.image.width | append: 'x' -%}
+              <div class="cover bg-center" style="background-image: {{ article.image | img_url: image_size }}"></div>
+            </noscript>
+  
+       {% endif %}
+    {% elsif article.title contains 'SATC' %}  
+    <div class=" light-image blog-header">    
+      <div class="article__heading-content">
+        <header role="banner" class="article__heading__text ph3 tc self-center centered-content">
+          <span class="blog-title">{{ blog.title }}</span>
+          <h1 class="type-heading-display measure-narrow center">And Just Like That, SATC Is Back</h1>
+          {%- if article.excerpt != blank -%}
+            <div class="type-body-large measure center">{{ excerptDescription | first }}</div>
+          {%- endif -%}
+          <span class="author-name"> 
+            <i>By</i> Fiona Matthias
+          </span>
+          <span class="read-time">
+            Time to read: 4 minutes
+          </span>
+          {% if article.metafields.blog.headerlink_copy and article.metafields.blog.headerlink_url %}
+            <span class="blog_header_link"><a href="{{ article.metafields.blog.headerlink_url }}">{{ article.metafields.blog.headerlink_copy }}</a></span>
+          {% endif %}
+        </header>
+      </div>
+    </div>  
+    {% elsif article.title contains 'Lucia Silvestri' %}  
+    <div class=" light-image blog-header">    
+      <div class="article__heading-content">
+        <header role="banner" class="article__heading__text ph3 tc self-center centered-content">
+          <span class="blog-title">{{ blog.title }}</span>
+          <h1 class="type-heading-display measure-narrow center">Lucia Silvestri | Bulgari</h1>
+          {%- if article.excerpt != blank -%}
+            <div class="type-body-large measure center">{{ excerptDescription | first }}</div>
+          {%- endif -%}
+          <span class="author-name"> 
+            <i>By</i> Fiona Matthias
+          </span>
+          <span class="read-time">
+            Time to read: 3 minutes
+          </span>
+          {% if article.metafields.blog.headerlink_copy and article.metafields.blog.headerlink_url %}
+            <span class="blog_header_link"><a href="{{ article.metafields.blog.headerlink_url }}">{{ article.metafields.blog.headerlink_copy }}</a></span>
+          {% endif %}
+        </header>
+      </div>
+    </div>
+    {% elsif article.title contains 'Great Women' %}  
+    <div class=" light-image blog-header">    
+      <div class="article__heading-content">
+        <header role="banner" class="article__heading__text ph3 tc self-center centered-content">
+          <span class="blog-title">{{ blog.title }}</span>
+          <h1 class="type-heading-display measure-narrow center">Great Women</h1>
+          {%- if article.excerpt != blank -%}
+            <div class="type-body-large measure center">{{ excerptDescription | first }}</div>
+          {%- endif -%}
+          <span class="author-name"> 
+            <i>By</i> Fiona Matthias
+          </span>
+          <span class="read-time">
+            Time to read: 5 minutes
+          </span>
+          {% if article.metafields.blog.headerlink_copy and article.metafields.blog.headerlink_url %}
+            <span class="blog_header_link"><a href="{{ article.metafields.blog.headerlink_url }}">{{ article.metafields.blog.headerlink_copy }}</a></span>
+          {% endif %}
+        </header>
+      </div>
+    </div>
+    {% else %}
+      {% render 'page-header' with title: article.title, hide_breadcrumbs: true %}
+    {% endif %}
+  
+</section>
+
+{% schema %}
+  {
+    "name": "Blog post",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Style"
+      },
+      {
+        "type": "range",
+        "id": "overlay_opacity",
+        "label": "Overlay opacity",
+        "min": 0,
+        "max": 100,
+        "step": 10,
+        "default": 30,
+        "unit": "%"
+      },
+      {
+        "type": "color",
+        "id": "overlay_color",
+        "label": "Overlay color"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text color"
+      }
+    ]
+  }
+{% endschema %}

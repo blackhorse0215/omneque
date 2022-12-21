@@ -1,0 +1,83 @@
+<section class="signupwithimage-wrapper">
+        <div class="signupwithimage">
+            <div class="signupwithimage-image">
+                <img src="{{ section.settings.image | img_url: 'x400' }}">
+            </div>
+            <div class="signupwithimage-signup">
+                <div class="signup-texts">
+                    {% comment %}{{ section.settings.text }}
+                    <a href="{{ section.settings.url }}">Join Now</a>{% endcomment %}
+                        <div class="footer__newsletter">
+                            <div class="footer__signup-text">
+                                <h1>Just between you and us…</h1>
+                                <p>For exclusive previews of the best of our jewels, for invitations to private events, and for behind-the-scenes access to fabulous gem and jewellery sales, sign up here</p>
+                            </div>
+
+                            <div class="footer__input-wrap">
+
+                            {% form 'customer' %}
+                                {{ form.errors | default_errors }}
+                                {% if form.posted_successfully? %}
+                                <p>{{ 'general.newsletter_form.confirmation' | t }}</p>
+                                {% else %}
+                                <input type="hidden" name="contact[tags]" value="newsletter">
+                            
+                                <div class="newsletter__input-container">
+                                    <input type="email"
+                                    class="input-reset input"
+                                    name="contact[email]"
+                                    id="Email"
+                                    value="{% if customer.email != blank %}{{ customer.email }}{% endif %}"
+                                    placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}"
+                                    autocorrect="off"
+                                    autocapitalize="off" required>
+                            
+                                    <div class="agree-term-condition">
+                                        <input type="checkbox" name="" class="agree-chk" required>
+                                        <span>I agree to the <a href="/policies/terms-of-service">Omnēque Terms</a> and <a href="/policies/privacy-policy">Privacy Policy</a>.</span>
+                                        <p class="term-condition-error hide">Please accept Terms and Conditions</p>
+                                    </div>
+                                    
+                                    <button type="submit" class="newsletter-submit btn button">Submit</button>
+                                </div>
+                                {% endif %}
+                            {% endform %}
+
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+{% schema %}
+{
+    "name": "SignupWithImage",
+    "settings": [
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Main Image"
+        },
+        {
+            "type": "textarea",
+            "id": "text",
+            "label": "Texts"
+        },
+        {
+            "type": "url",
+            "id": "url",
+            "label": "Button Url"
+        }
+    ],
+    "presets": [
+      {
+        "name": "SignupWithImage",
+        "category": "SignUpForm",
+        "settings": {
+         
+        }
+      }
+    ]
+}
+{% endschema %}

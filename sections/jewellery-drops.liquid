@@ -1,0 +1,102 @@
+<section
+  data-section-id="{{ section.id }}"
+  data-section-type="dynamic-collection-list"
+  
+>
+<section class="section tc title-with-subtext">
+    {% if section.settings.title != blank %}
+    <h1 class="section-title">{{ section.settings.title | escape }}</h1>
+    {% endif %}
+    <div class="type-body-large rte center measure-wide">
+      {{ section.settings.sub_title }}
+    </div>
+</section>
+<div class="section">
+  <div class="collections__list">
+    {% for block in section.blocks %}
+      {%- assign collection = collections[block.settings.collection] -%}
+      	<div class="collections__collection-wrapper">
+            <div class="collections__collection">
+                <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: title }}">
+                  {% if collection.image != blank or collection.products.first != blank %}
+                    {%- assign image_object = collection.image | default: collection.products.first.featured_media.preview_image -%}
+                    {% render 'responsive-image' with
+                      image: image_object,
+                      max_width: 480,
+                      max_height: 480
+                    %}
+                  {%endif %}
+                </a>
+
+                <div class="collections__collection-meta collection-item-info">
+                  <h2 class="type-heading-1">
+                    <a href="{{ collection.url }}" title="{{ 'collections.general.link_title' | t: title: title }}">{{ collection.title }}</a>
+                  </h2>
+                  <p class="type-body-regular mb0">{{ collection.description | strip_html | truncate:150 }}</p>
+                </div>
+            </div>
+		</div>
+    {% endfor %}
+  </div>
+</div>
+</section>
+
+{% schema %}
+  {
+    "name": "Jewellery Drops list",
+    "max_blocks": 100,
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Collection list"
+      },
+      {
+        "type": "richtext",
+        "id": "sub_title",
+        "label": "Sub Heading"
+      },
+      {
+        "type": "header",
+        "content": "Section style"
+      },
+      {
+        "type": "checkbox",
+        "id": "outline",
+        "label": "Outline section",
+        "default": false
+      }
+    ],
+    "blocks": [
+      {
+        "type": "collection",
+        "name": "Collection",
+        "settings": [
+          {
+            "label": "Collection",
+            "id": "collection",
+            "type": "collection"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Jewellery Drops list",
+        "category": "Collection",
+        "blocks": [
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          },
+          {
+            "type": "collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
